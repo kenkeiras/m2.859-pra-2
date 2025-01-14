@@ -1,0 +1,1585 @@
+{
+  "page": 1,
+  "per_page": 25,
+  "total_pages": 50,
+  "total_vulns": 1241,
+  "vulnerabilities": [
+    {
+      "_id": "6761a259a650a914a44102dd",
+      "cveID": "CVE-2024-55956",
+      "dateAdded": "2024-12-17",
+      "dueDate": "2025-01-07",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Known",
+      "notes": "https://support.cleo.com/hc/en-us/articles/28408134019735-Cleo-Product-Security-Update-CVE-2024-55956 ; https://nvd.nist.gov/vuln/detail/CVE-2024-55956",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.8,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "cve@mitre.org",
+              "url": "https://support.cleo.com/hc/en-us/articles/28408134019735-Cleo-Product-Security-Advisory-CVE-Pending"
+            },
+            {
+              "source": "af854a3a-2127-422b-91ae-364da2661108",
+              "url": "https://support.cleo.com/hc/en-us/articles/28408134019735-Cleo-Product-Security-Update"
+            },
+            {
+              "source": "af854a3a-2127-422b-91ae-364da2661108",
+              "url": "https://www.huntress.com/blog/threat-advisory-oh-no-cleo-cleo-software-actively-being-exploited-in-the-wild"
+            }
+          ],
+          "vulnStatus": "Received"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": [
+            "Cobalt strike"
+          ]
+        }
+      ],
+      "product": "Multiple Products",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Cleo Harmony, VLTrader, and LexiCom, which are managed file transfer products, contain an unrestricted file upload vulnerability that could allow an unauthenticated user to import and execute arbitrary bash or PowerShell commands on the host system by leveraging the default settings of the Autorun directory.",
+      "vendorProject": "Cleo",
+      "vulnerabilityName": "Cleo Multiple Products Unauthenticated File Upload Vulnerability"
+    },
+    {
+      "_id": "676046bdcf095a955165b939",
+      "cveID": "CVE-2024-20767",
+      "dateAdded": "2024-12-16",
+      "dueDate": "2025-01-06",
+      "githubPocs": [
+        "https://github.com/Praison001/CVE-2024-20767-Adobe-ColdFusion",
+        "https://github.com/Chocapikk/CVE-2024-20767",
+        "https://github.com/m-cetin/CVE-2024-20767",
+        "https://github.com/yoryio/CVE-2024-20767"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://helpx.adobe.com/security/products/coldfusion/apsb24-14.html ; https://nvd.nist.gov/vuln/detail/CVE-2024-20767",
+      "nvdData": [
+        {
+          "attackComplexity": "HIGH",
+          "attackVector": "NETWORK",
+          "baseScore": 7.4,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 2.2,
+          "nvdReferences": [
+            {
+              "source": "psirt@adobe.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://helpx.adobe.com/security/products/coldfusion/apsb24-14.html"
+            },
+            {
+              "source": "af854a3a-2127-422b-91ae-364da2661108",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://helpx.adobe.com/security/products/coldfusion/apsb24-14.html"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "ColdFusion",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Adobe ColdFusion contains an improper access control vulnerability that could allow an attacker to access or modify restricted files via an internet-exposed admin panel.",
+      "vendorProject": "Adobe",
+      "vulnerabilityName": "Adobe ColdFusion Improper Access Control Vulnerability"
+    },
+    {
+      "_id": "676046bbcf095a955165b938",
+      "cveID": "CVE-2024-35250",
+      "dateAdded": "2024-12-16",
+      "dueDate": "2025-01-06",
+      "githubPocs": [
+        "https://github.com/yinsel/CVE-2024-35250-BOF",
+        "https://github.com/ro0tmylove/CVE-2024-35250-BOF",
+        "https://github.com/0xjiefeng/CVE-2024-35250-BOF",
+        "https://github.com/varwara/CVE-2024-35250"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-35250 ; https://nvd.nist.gov/vuln/detail/CVE-2024-35250",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "LOCAL",
+          "baseScore": 7.8,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 1.8,
+          "nvdReferences": [
+            {
+              "source": "secure@microsoft.com",
+              "tags": [
+                "Patch",
+                "Vendor Advisory"
+              ],
+              "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-35250"
+            },
+            {
+              "source": "af854a3a-2127-422b-91ae-364da2661108",
+              "tags": [
+                "Patch",
+                "Vendor Advisory"
+              ],
+              "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-35250"
+            }
+          ],
+          "vulnStatus": "Modified"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Windows",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Microsoft Windows Kernel-Mode Driver contains an untrusted pointer dereference vulnerability that allows a local attacker to escalate privileges.",
+      "vendorProject": "Microsoft",
+      "vulnerabilityName": "Microsoft Windows Kernel-Mode Driver Untrusted Pointer Dereference Vulnerability "
+    },
+    {
+      "_id": "675c9499e8c14ca971197880",
+      "cveID": "CVE-2024-50623",
+      "dateAdded": "2024-12-13",
+      "dueDate": "2025-01-03",
+      "githubPocs": [
+        "https://github.com/watchtowrlabs/CVE-2024-50623"
+      ],
+      "knownRansomwareCampaignUse": "Known",
+      "notes": "https://support.cleo.com/hc/en-us/articles/28408134019735-Cleo-Product-Security-Update ; https://nvd.nist.gov/vuln/detail/CVE-2024-50623",
+      "nvdData": [
+        {
+          "nvdReferences": [
+            {
+              "source": "cve@mitre.org",
+              "url": "https://support.cleo.com/hc/en-us/articles/27140294267799-Cleo-Product-Security-Advisory"
+            }
+          ],
+          "vulnStatus": "Awaiting Analysis"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Termite"
+          ],
+          "affectedIndustries": [
+            "Transportation",
+            "Manufacturing",
+            "Retail"
+          ],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": [
+            "Termite"
+          ]
+        }
+      ],
+      "product": "Multiple Products",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Cleo Harmony, VLTrader, and LexiCom, which are managed file transfer products, contain an unrestricted file upload and download vulnerability that can lead to remote code execution with elevated privileges.",
+      "vendorProject": "Cleo",
+      "vulnerabilityName": "Cleo Multiple Products Unrestricted File Upload Vulnerability"
+    },
+    {
+      "_id": "67588ecb33ca977a01958559",
+      "cveID": "CVE-2024-49138",
+      "dateAdded": "2024-12-10",
+      "dueDate": "2024-12-31",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2024-49138 ; https://nvd.nist.gov/vuln/detail/CVE-2024-49138",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "LOCAL",
+          "baseScore": 7.8,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 1.8,
+          "nvdReferences": [
+            {
+              "source": "secure@microsoft.com",
+              "tags": [
+                "Patch",
+                "Vendor Advisory"
+              ],
+              "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-49138"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Windows",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Microsoft Windows Common Log File System (CLFS) driver contains a heap-based buffer overflow vulnerability that allows a local attacker to escalate privileges.",
+      "vendorProject": "Microsoft",
+      "vulnerabilityName": "Microsoft Windows Common Log File System (CLFS) Driver Heap-Based Buffer Overflow Vulnerability"
+    },
+    {
+      "_id": "67507ed9bc6354068a1b7817",
+      "cveID": "CVE-2024-51378",
+      "dateAdded": "2024-12-04",
+      "dueDate": "2024-12-25",
+      "githubPocs": [
+        "https://github.com/refr4g/CVE-2024-51378"
+      ],
+      "knownRansomwareCampaignUse": "Known",
+      "notes": "https://cyberpanel.net/KnowledgeBase/home/change-logs/ ; https://nvd.nist.gov/vuln/detail/CVE-2024-51378",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 10,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Technical Description"
+              ],
+              "url": "https://cwe.mitre.org/data/definitions/420.html"
+            },
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Technical Description"
+              ],
+              "url": "https://cwe.mitre.org/data/definitions/78.html"
+            },
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Release Notes"
+              ],
+              "url": "https://cyberpanel.net/KnowledgeBase/home/change-logs/"
+            },
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Product"
+              ],
+              "url": "https://cyberpanel.net/blog/detials-and-fix-of-recent-security-issue-and-patch-of-cyberpanel"
+            },
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Patch"
+              ],
+              "url": "https://github.com/usmannasir/cyberpanel/commit/1c0c6cbcf71abe573da0b5fddfb9603e7477f683"
+            },
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Exploit"
+              ],
+              "url": "https://refr4g.github.io/posts/cyberpanel-command-injection-vulnerability/"
+            },
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Exploit",
+                "Press/Media Coverage"
+              ],
+              "url": "https://www.bleepingcomputer.com/news/security/massive-psaux-ransomware-attack-targets-22-000-cyberpanel-instances/"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "CyberPanel",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "CyberPanel contains an incorrect default permissions vulnerability that allows for authentication bypass and the execution of arbitrary commands using shell metacharacters in the statusfile property.",
+      "vendorProject": "CyberPersons",
+      "vulnerabilityName": "CyberPanel Incorrect Default Permissions Vulnerability"
+    },
+    {
+      "_id": "674f2d5d6d20d645a3ff730d",
+      "cveID": "CVE-2023-45727",
+      "dateAdded": "2024-12-03",
+      "dueDate": "2024-12-24",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://www.proself.jp/information/153/ ; https://nvd.nist.gov/vuln/detail/CVE-2023-45727",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 7.5,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "vultures@jpcert.or.jp",
+              "tags": [
+                "Third Party Advisory"
+              ],
+              "url": "https://jvn.jp/en/jp/JVN95981460/"
+            },
+            {
+              "source": "vultures@jpcert.or.jp",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://www.proself.jp/information/153/"
+            },
+            {
+              "source": "af854a3a-2127-422b-91ae-364da2661108",
+              "tags": [
+                "Third Party Advisory"
+              ],
+              "url": "https://jvn.jp/en/jp/JVN95981460/"
+            },
+            {
+              "source": "af854a3a-2127-422b-91ae-364da2661108",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://www.proself.jp/information/153/"
+            }
+          ],
+          "vulnStatus": "Modified"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Earth Kasha"
+          ],
+          "affectedIndustries": [
+            "Defense",
+            "Manufacturing",
+            "Government",
+            "Technology"
+          ],
+          "communityAdversaries": [
+            "Earth Kasha",
+            "Threat"
+          ],
+          "communityAffectedIndustries": [
+            "Manufacturing",
+            "Technology",
+            "Government",
+            "Industrial",
+            "Defense",
+            "Critical infrastructure"
+          ],
+          "communityMalwareFamilies": [
+            "Cobalt strike - s0154",
+            "Mirrorstealer",
+            "Helldown",
+            "Threat",
+            "Lodeinfo",
+            "Downjpit",
+            "Noopdoor",
+            "Cobalt strike"
+          ],
+          "malwareFamiles": [
+            "Lodeinfo",
+            "Cobalt strike - s0154",
+            "Mirrorstealer",
+            "Noopdoor"
+          ]
+        }
+      ],
+      "product": "Proself",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "North Grid Proself Enterprise/Standard, Gateway, and Mail Sanitize contain an improper restriction of XML External Entity (XXE) reference vulnerability, which could allow a remote, unauthenticated attacker to conduct an XXE attack.",
+      "vendorProject": "North Grid",
+      "vulnerabilityName": "North Grid Proself Improper Restriction of XML External Entity (XEE) Reference Vulnerability"
+    },
+    {
+      "_id": "674f2d5c6d20d645a3ff730c",
+      "cveID": "CVE-2024-11680",
+      "dateAdded": "2024-12-03",
+      "dueDate": "2024-12-24",
+      "githubPocs": [
+        "https://github.com/famixcm/CVE-2024-11680",
+        "https://github.com/D3N14LD15K/CVE-2024-11680_PoC_Exploit"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://github.com/projectsend/projectsend/commit/193367d937b1a59ed5b68dd4e60bd53317473744 ; https://nvd.nist.gov/vuln/detail/CVE-2024-11680",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.8,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "disclosure@vulncheck.com",
+              "tags": [
+                "Third Party Advisory"
+              ],
+              "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/vulnerabilities/projectsend-auth-bypass.yaml"
+            },
+            {
+              "source": "disclosure@vulncheck.com",
+              "tags": [
+                "Patch"
+              ],
+              "url": "https://github.com/projectsend/projectsend/commit/193367d937b1a59ed5b68dd4e60bd53317473744"
+            },
+            {
+              "source": "disclosure@vulncheck.com",
+              "tags": [
+                "Exploit"
+              ],
+              "url": "https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/http/projectsend_unauth_rce.rb"
+            },
+            {
+              "source": "disclosure@vulncheck.com",
+              "tags": [
+                "Third Party Advisory"
+              ],
+              "url": "https://vulncheck.com/advisories/projectsend-bypass"
+            },
+            {
+              "source": "disclosure@vulncheck.com",
+              "tags": [
+                "Mitigation",
+                "Technical Description",
+                "Third Party Advisory"
+              ],
+              "url": "https://www.synacktiv.com/sites/default/files/2024-07/synacktiv-projectsend-multiple-vulnerabilities.pdf"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [
+            "Helldown"
+          ],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "ProjectSend",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "ProjectSend contains an improper authentication vulnerability that allows a remote, unauthenticated attacker to enable unauthorized modification of the application's configuration via crafted HTTP requests to options.php. Successful exploitation allows attackers to create accounts, upload webshells, and embed malicious JavaScript.",
+      "vendorProject": "ProjectSend",
+      "vulnerabilityName": "ProjectSend Improper Authentication Vulnerability"
+    },
+    {
+      "_id": "674f2d596d20d645a3ff730b",
+      "cveID": "CVE-2024-11667",
+      "dateAdded": "2024-12-03",
+      "dueDate": "2024-12-24",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Known",
+      "notes": "https://www.zyxel.com/global/en/support/security-advisories/zyxel-security-advisory-protecting-against-recent-firewall-threats-11-21-2024 ; https://nvd.nist.gov/vuln/detail/CVE-2024-11667",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 7.5,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "security@zyxel.com.tw",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://www.zyxel.com/global/en/support/security-advisories/zyxel-security-advisory-protecting-against-recent-firewall-threats-11-27-2024"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [
+            "Helldown"
+          ],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Multiple Firewalls",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Multiple Zyxel firewalls contain a path traversal vulnerability in the web management interface that could allow an attacker to download or upload files via a crafted URL.",
+      "vendorProject": "Zyxel",
+      "vulnerabilityName": "Zyxel Multiple Firewalls Path Traversal Vulnerability"
+    },
+    {
+      "_id": "6744a159e37ec86f3bc52d34",
+      "cveID": "CVE-2023-28461",
+      "dateAdded": "2024-11-25",
+      "dueDate": "2024-12-16",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Known",
+      "notes": "https://support.arraynetworks.net/prx/001/http/supportportal.arraynetworks.net/documentation/FieldNotice/Array_Networks_Security_Advisory_for_Remote_Code_Execution_Vulnerability_AG.pdf ; https://nvd.nist.gov/vuln/detail/CVE-2023-28461",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.8,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "cve@mitre.org",
+              "tags": [
+                "Mitigation",
+                "Vendor Advisory"
+              ],
+              "url": "https://support.arraynetworks.net/prx/001/http/supportportal.arraynetworks.net/documentation/FieldNotice/Array_Networks_Security_Advisory_for_Remote_Code_Execution_Vulnerability_AG.pdf"
+            },
+            {
+              "source": "af854a3a-2127-422b-91ae-364da2661108",
+              "tags": [
+                "Mitigation",
+                "Vendor Advisory"
+              ],
+              "url": "https://support.arraynetworks.net/prx/001/http/supportportal.arraynetworks.net/documentation/FieldNotice/Array_Networks_Security_Advisory_for_Remote_Code_Execution_Vulnerability_AG.pdf"
+            }
+          ],
+          "vulnStatus": "Modified"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Earth Kasha"
+          ],
+          "affectedIndustries": [
+            "Defense",
+            "Technology",
+            "Manufacturing",
+            "Government"
+          ],
+          "communityAdversaries": [
+            "Earth Kasha",
+            "Threat"
+          ],
+          "communityAffectedIndustries": [
+            "Manufacturing",
+            "Critical infrastructure",
+            "Industrial",
+            "Defense",
+            "Technology",
+            "Government"
+          ],
+          "communityMalwareFamilies": [
+            "Cobalt strike",
+            "Noopdoor",
+            "Cobalt strike - s0154",
+            "Mirrorstealer",
+            "Lodeinfo",
+            "Downjpit",
+            "Threat"
+          ],
+          "malwareFamiles": [
+            "Lodeinfo",
+            "Noopdoor",
+            "Cobalt strike - s0154",
+            "Mirrorstealer"
+          ]
+        }
+      ],
+      "product": "AG/vxAG ArrayOS",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Array Networks AG and vxAG ArrayOS contains an improper authentication vulnerability that allows an attacker to read local files and execute code on the SSL VPN gateway.",
+      "vendorProject": "Array Networks ",
+      "vulnerabilityName": "Array Networks AG and vxAG ArrayOS Improper Authentication Vulnerability"
+    },
+    {
+      "_id": "673f5b60418bc0e42e684438",
+      "cveID": "CVE-2024-44308",
+      "dateAdded": "2024-11-21",
+      "dueDate": "2024-12-12",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://support.apple.com/en-us/121752, https://support.apple.com/en-us/121753, https://support.apple.com/en-us/121754, https://support.apple.com/en-us/121755, https://support.apple.com/en-us/121756 ; https://nvd.nist.gov/vuln/detail/CVE-2024-44308",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 8.8,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 2.8,
+          "nvdReferences": [
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121752"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121753"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121754"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121755"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121756"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Multiple Products",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Apple iOS, macOS, and other Apple products contain an unspecified vulnerability when processing maliciously crafted web content that may lead to arbitrary code execution.",
+      "vendorProject": "Apple",
+      "vulnerabilityName": "Apple Multiple Products Code Execution Vulnerability"
+    },
+    {
+      "_id": "673f5b5e418bc0e42e684437",
+      "cveID": "CVE-2024-44309",
+      "dateAdded": "2024-11-21",
+      "dueDate": "2024-12-12",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://support.apple.com/en-us/121752, https://support.apple.com/en-us/121753, https://support.apple.com/en-us/121754, https://support.apple.com/en-us/121755, https://support.apple.com/en-us/121756 ; https://nvd.nist.gov/vuln/detail/CVE-2024-44309",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 6.1,
+          "baseSeverity": "MEDIUM",
+          "exploitabilityScore": 2.8,
+          "nvdReferences": [
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121752"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121753"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121754"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121755"
+            },
+            {
+              "source": "product-security@apple.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.apple.com/en-us/121756"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Multiple Products",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Apple iOS, macOS, and other Apple products contain an unspecified vulnerability when processing maliciously crafted web content that may lead to a cross-site scripting (XSS) attack.",
+      "vendorProject": "Apple",
+      "vulnerabilityName": "Apple Multiple Products Cross-Site Scripting (XSS) Vulnerability"
+    },
+    {
+      "_id": "673f5b59418bc0e42e684436",
+      "cveID": "CVE-2024-21287",
+      "dateAdded": "2024-11-21",
+      "dueDate": "2024-12-12",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://www.oracle.com/security-alerts/alert-cve-2024-21287.html ; https://nvd.nist.gov/vuln/detail/CVE-2024-21287",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 7.5,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "secalert_us@oracle.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://www.oracle.com/security-alerts/alert-cve-2024-21287.html"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Agile Product Lifecycle Management (PLM)",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Oracle Agile Product Lifecycle Management (PLM) contains an incorrect authorization vulnerability in the Process Extension component of the Software Development Kit. Successful exploitation of this vulnerability may result in unauthenticated file disclosure.",
+      "vendorProject": "Oracle",
+      "vulnerabilityName": "Oracle Agile Product Lifecycle Management (PLM) Incorrect Authorization Vulnerability"
+    },
+    {
+      "_id": "673e09dcdab0ea7f8d1a3637",
+      "cveID": "CVE-2024-38812",
+      "dateAdded": "2024-11-20",
+      "dueDate": "2024-12-11",
+      "githubPocs": [
+        "https://github.com/groshi/CVE-2024-38812-POC-5-Hands-Private"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/24968 ; https://nvd.nist.gov/vuln/detail/CVE-2024-38812",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.8,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "security@vmware.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/24968"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "BlueNoroff"
+          ],
+          "affectedIndustries": [
+            "Finance"
+          ],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": [
+            "Growth",
+            "Lessonone"
+          ]
+        }
+      ],
+      "product": "vCenter Server",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "VMware vCenter Server contains a heap-based buffer overflow vulnerability in the implementation of the DCERPC protocol. This vulnerability could allow an attacker with network access to the vCenter Server to execute remote code by sending a specially crafted packet.",
+      "vendorProject": "VMware",
+      "vulnerabilityName": "VMware vCenter Server Heap-Based Buffer Overflow Vulnerability"
+    },
+    {
+      "_id": "673e09d9dab0ea7f8d1a3636",
+      "cveID": "CVE-2024-38813",
+      "dateAdded": "2024-11-20",
+      "dueDate": "2024-12-11",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/24968 ; https://nvd.nist.gov/vuln/detail/CVE-2024-38813",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.8,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "security@vmware.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/24968"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "vCenter Server",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "VMware vCenter contains an improper check for dropped privileges vulnerability. This vulnerability could allow an attacker with network access to the vCenter Server to escalate privileges to root by sending a specially crafted packet.",
+      "vendorProject": "VMware",
+      "vulnerabilityName": "VMware vCenter Server Privilege Escalation Vulnerability"
+    },
+    {
+      "_id": "673b9f1d649d65111d589d2c",
+      "cveID": "CVE-2024-1212",
+      "dateAdded": "2024-11-18",
+      "dueDate": "2024-12-09",
+      "githubPocs": [
+        "https://github.com/Chocapikk/CVE-2024-1212"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://community.progress.com/s/article/Release-Notice-LMOS-7-2-59-2-7-2-54-8-7-2-48-10-CVE-2024-1212 ; https://nvd.nist.gov/vuln/detail/CVE-2024-1212",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.8,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "security@progress.com",
+              "tags": [
+                "Product"
+              ],
+              "url": "https://freeloadbalancer.com/"
+            },
+            {
+              "source": "security@progress.com",
+              "tags": [
+                "Product"
+              ],
+              "url": "https://kemptechnologies.com/"
+            },
+            {
+              "source": "security@progress.com",
+              "tags": [
+                "Not Applicable"
+              ],
+              "url": "https://support.kemptechnologies.com/hc/en-us/articles/23878931058445-LoadMaster-Security-Vulnerability-CVE-2024-1212"
+            },
+            {
+              "source": "security@progress.com",
+              "tags": [
+                "Release Notes"
+              ],
+              "url": "https://support.kemptechnologies.com/hc/en-us/articles/24325072850573-Release-Notice-LMOS-7-2-59-2-7-2-54-8-7-2-48-10-CVE-2024-1212"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Kemp LoadMaster",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Progress Kemp LoadMaster contains an OS command injection vulnerability that allows an unauthenticated, remote attacker to access the system through the LoadMaster management interface, enabling arbitrary system command execution.",
+      "vendorProject": "Progress",
+      "vulnerabilityName": "Progress Kemp LoadMaster OS Command Injection Vulnerability"
+    },
+    {
+      "_id": "673b9f1b649d65111d589d2b",
+      "cveID": "CVE-2024-0012",
+      "dateAdded": "2024-11-18",
+      "dueDate": "2024-12-09",
+      "githubPocs": [
+        "https://github.com/iSee857/CVE-2024-0012-poc",
+        "https://github.com/VegetableLasagne/CVE-2024-0012",
+        "https://github.com/greaselovely/CVE-2024-0012",
+        "https://github.com/Sachinart/CVE-2024-0012-POC",
+        "https://github.com/XiaomingX/cve-2024-0012-poc",
+        "https://github.com/0xjessie21/CVE-2024-0012",
+        "https://github.com/TalatumLabs/CVE-2024-0012_CVE-2024-9474_PoC"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://security.paloaltonetworks.com/CVE-2024-0012 ; https://nvd.nist.gov/vuln/detail/CVE-2024-0012",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.8,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "psirt@paloaltonetworks.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://security.paloaltonetworks.com/CVE-2024-0012"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Howling Scorpius"
+          ],
+          "affectedIndustries": [
+            "Pharmaceuticals",
+            "Manufacturing",
+            "Finance",
+            "Technology",
+            "Energy",
+            "Government",
+            "Telecommunications",
+            "Education",
+            "Consulting"
+          ],
+          "communityAdversaries": [
+            "Scorpius"
+          ],
+          "communityAffectedIndustries": [
+            "Pharmaceuticals",
+            "Manufacturing",
+            "Finance",
+            "Technology",
+            "Construction",
+            "Wholesale",
+            "Energy",
+            "Government",
+            "Legal",
+            "Retail",
+            "Telecommunications",
+            "Education",
+            "Consulting"
+          ],
+          "communityMalwareFamilies": [
+            "Megazord",
+            "Windows",
+            "Akira_v2",
+            "Esxi",
+            "Xpanse",
+            "Cobalt strike",
+            "Akira",
+            "Blacksuit windows",
+            "Blacksuit",
+            "Conti"
+          ],
+          "malwareFamiles": [
+            "Bustleberm",
+            "Megazord",
+            "Akira - s1129",
+            "Frostygoop"
+          ]
+        }
+      ],
+      "product": "PAN-OS",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable. Additionally, management interface for affected devices should not be exposed to untrusted networks, including the internet.",
+      "shortDescription": "Palo Alto Networks PAN-OS contains an authentication bypass vulnerability in the web-based management interface for several PAN-OS products, including firewalls and VPN concentrators.",
+      "vendorProject": "Palo Alto Networks",
+      "vulnerabilityName": "Palo Alto Networks PAN-OS Management Interface Authentication Bypass Vulnerability"
+    },
+    {
+      "_id": "673b9f19649d65111d589d2a",
+      "cveID": "CVE-2024-9474",
+      "dateAdded": "2024-11-18",
+      "dueDate": "2024-12-09",
+      "githubPocs": [
+        "https://github.com/deathvu/CVE-2024-9474",
+        "https://github.com/Chocapikk/CVE-2024-9474",
+        "https://github.com/coskper-papa/PAN-OS_CVE-2024-9474"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://security.paloaltonetworks.com/CVE-2024-9474 ; https://nvd.nist.gov/vuln/detail/CVE-2024-9474",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 7.2,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 1.2,
+          "nvdReferences": [
+            {
+              "source": "psirt@paloaltonetworks.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "https://security.paloaltonetworks.com/CVE-2024-9474"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Howling Scorpius"
+          ],
+          "affectedIndustries": [
+            "Pharmaceuticals",
+            "Education",
+            "Technology",
+            "Telecommunications",
+            "Energy",
+            "Manufacturing",
+            "Government",
+            "Finance",
+            "Consulting"
+          ],
+          "communityAdversaries": [
+            "Scorpius"
+          ],
+          "communityAffectedIndustries": [
+            "Pharmaceuticals",
+            "Wholesale",
+            "Education",
+            "Technology",
+            "Telecommunications",
+            "Construction",
+            "Legal",
+            "Energy",
+            "Manufacturing",
+            "Government",
+            "Finance",
+            "Consulting",
+            "Retail"
+          ],
+          "communityMalwareFamilies": [
+            "Cobalt strike",
+            "Akira_v2",
+            "Esxi",
+            "Windows",
+            "Xpanse",
+            "Megazord",
+            "Conti",
+            "Akira",
+            "Blacksuit",
+            "Blacksuit windows"
+          ],
+          "malwareFamiles": [
+            "Akira - s1129",
+            "Megazord"
+          ]
+        }
+      ],
+      "product": "PAN-OS",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable. Additionally, the management interfaces for affected devices should not be exposed to untrusted networks, including the internet.",
+      "shortDescription": "Palo Alto Networks PAN-OS contains an OS command injection vulnerability that allows for privilege escalation through the web-based management interface for several PAN products, including firewalls and VPN concentrators.",
+      "vendorProject": "Palo Alto Networks",
+      "vulnerabilityName": "Palo Alto Networks PAN-OS Management Interface OS Command Injection Vulnerability"
+    },
+    {
+      "_id": "67364b0b8022a10e7c77391b",
+      "cveID": "CVE-2024-9463",
+      "dateAdded": "2024-11-14",
+      "dueDate": "2024-12-05",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://security.paloaltonetworks.com/PAN-SA-2024-0010 ; https://nvd.nist.gov/vuln/detail/CVE-2024-9463",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 7.5,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "psirt@paloaltonetworks.com",
+              "tags": [
+                "Mitigation",
+                "Vendor Advisory"
+              ],
+              "url": "https://security.paloaltonetworks.com/PAN-SA-2024-0010"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [
+            "N/A"
+          ],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Expedition",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Palo Alto Networks Expedition contains an OS command injection vulnerability that allows an unauthenticated attacker to run arbitrary OS commands as root in Expedition, resulting in disclosure of usernames, cleartext passwords, device configurations, and device API keys of PAN-OS firewalls.",
+      "vendorProject": "Palo Alto Networks",
+      "vulnerabilityName": "Palo Alto Networks Expedition OS Command Injection Vulnerability"
+    },
+    {
+      "_id": "67364b098022a10e7c77391a",
+      "cveID": "CVE-2024-9465",
+      "dateAdded": "2024-11-14",
+      "dueDate": "2024-12-05",
+      "githubPocs": [
+        "https://github.com/mustafaakalin/CVE-2024-9465",
+        "https://github.com/horizon3ai/CVE-2024-9465",
+        "https://github.com/XiaomingX/cve-2024-9465-poc",
+        "https://github.com/Farzan-Kh/CVE-2024-9465"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://security.paloaltonetworks.com/PAN-SA-2024-0010 ; https://nvd.nist.gov/vuln/detail/CVE-2024-9465",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 9.1,
+          "baseSeverity": "CRITICAL",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "psirt@paloaltonetworks.com",
+              "tags": [
+                "Mitigation",
+                "Vendor Advisory"
+              ],
+              "url": "https://security.paloaltonetworks.com/PAN-SA-2024-0010"
+            },
+            {
+              "source": "psirt@paloaltonetworks.com",
+              "url": "https://www.horizon3.ai/attack-research/palo-alto-expedition-from-n-day-to-full-compromise/"
+            }
+          ],
+          "vulnStatus": "Modified"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [
+            "N/A"
+          ],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Expedition",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Palo Alto Networks Expedition contains a SQL injection vulnerability that allows an unauthenticated attacker to reveal Expedition database contents, such as password hashes, usernames, device configurations, and device API keys. With this, attackers can also create and read arbitrary files on the Expedition system.",
+      "vendorProject": "Palo Alto Networks",
+      "vulnerabilityName": "Palo Alto Networks Expedition SQL Injection Vulnerability"
+    },
+    {
+      "_id": "6733a810054d15351e7dd494",
+      "cveID": "CVE-2024-49039",
+      "dateAdded": "2024-11-12",
+      "dueDate": "2024-12-03",
+      "githubPocs": [
+        "https://github.com/je5442804/WPTaskScheduler_CVE-2024-49039"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2024-49039 ; https://nvd.nist.gov/vuln/detail/CVE-2024-49039",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "LOCAL",
+          "baseScore": 8.8,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 2,
+          "nvdReferences": [
+            {
+              "source": "secure@microsoft.com",
+              "tags": [
+                "Patch",
+                "Vendor Advisory"
+              ],
+              "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-49039"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [
+            "Threat analysis",
+            "Romcom"
+          ],
+          "malwareFamiles": []
+        }
+      ],
+      "product": "Windows",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Microsoft Windows Task Scheduler contains a privilege escalation vulnerability that can allow an attacker-provided, local application to escalate privileges outside of its AppContainer, and access privileged RPC functions.",
+      "vendorProject": "Microsoft",
+      "vulnerabilityName": "Microsoft Windows Task Scheduler Privilege Escalation Vulnerability"
+    },
+    {
+      "_id": "6733a80f054d15351e7dd493",
+      "cveID": "CVE-2024-43451",
+      "dateAdded": "2024-11-12",
+      "dueDate": "2024-12-03",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-43451 ; https://nvd.nist.gov/vuln/detail/CVE-2024-43451",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 6.5,
+          "baseSeverity": "MEDIUM",
+          "exploitabilityScore": 2.8,
+          "nvdReferences": [
+            {
+              "source": "secure@microsoft.com",
+              "tags": [
+                "Patch",
+                "Vendor Advisory"
+              ],
+              "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-43451"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "UAC-0194"
+          ],
+          "affectedIndustries": [
+            "Government"
+          ],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [],
+          "malwareFamiles": [
+            "Spark rat"
+          ]
+        }
+      ],
+      "product": "Windows",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Microsoft Windows contains an NTLMv2 hash spoofing vulnerability that could result in disclosing a user's NTLMv2 hash to an attacker via a file open operation. The attacker could then leverage this hash to impersonate that user.",
+      "vendorProject": "Microsoft",
+      "vulnerabilityName": "Microsoft Windows NTLMv2 Hash Disclosure Spoofing Vulnerability"
+    },
+    {
+      "_id": "6733a80d054d15351e7dd492",
+      "cveID": "CVE-2021-41277",
+      "dateAdded": "2024-11-12",
+      "dueDate": "2024-12-03",
+      "githubPocs": [
+        "https://github.com/Chen-ling-afk/CVE-2021-41277",
+        "https://github.com/frknktlca/Metabase_Nmap_Script",
+        "https://github.com/sasukeourad/CVE-2021-41277_SSRF",
+        "https://github.com/TheLastVvV/CVE-2021-41277",
+        "https://github.com/kaizensecurity/CVE-2021-41277",
+        "https://github.com/z3n70/CVE-2021-41277",
+        "https://github.com/kap1ush0n/CVE-2021-41277",
+        "https://github.com/Henry4E36/Metabase-cve-2021-41277",
+        "https://github.com/tahtaciburak/CVE-2021-41277",
+        "https://github.com/Seals6/CVE-2021-41277"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://github.com/metabase/metabase/security/advisories/GHSA-w73v-6p7p-fpfr ; https://nvd.nist.gov/vuln/detail/CVE-2021-41277",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 7.5,
+          "baseSeverity": "HIGH",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "security-advisories@github.com",
+              "tags": [
+                "Patch",
+                "Third Party Advisory"
+              ],
+              "url": "https://github.com/metabase/metabase/commit/042a36e49574c749f944e19cf80360fd3dc322f0"
+            },
+            {
+              "source": "security-advisories@github.com",
+              "tags": [
+                "Third Party Advisory"
+              ],
+              "url": "https://github.com/metabase/metabase/security/advisories/GHSA-w73v-6p7p-fpfr"
+            }
+          ],
+          "vulnStatus": "Modified"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Androxgh0st"
+          ],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [
+            "Cobalt strike",
+            "Blackcat",
+            "Mozi",
+            "Androxgh0st"
+          ],
+          "malwareFamiles": [
+            "Mozi",
+            "Androxgh0st"
+          ]
+        }
+      ],
+      "product": "Metabase",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Metabase contains a local file inclusion vulnerability in the custom map support in the API to read GeoJSON formatted data.",
+      "vendorProject": "Metabase",
+      "vulnerabilityName": "Metabase GeoJSON API Local File Inclusion Vulnerability"
+    },
+    {
+      "_id": "6733a80b054d15351e7dd491",
+      "cveID": "CVE-2014-2120",
+      "dateAdded": "2024-11-12",
+      "dueDate": "2024-12-03",
+      "githubPocs": [],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://web.archive.org/web/20140403043510/http://tools.cisco.com/security/center/content/CiscoSecurityNotice/CVE-2014-2120 ; https://nvd.nist.gov/vuln/detail/CVE-2014-2120",
+      "nvdData": [
+        {
+          "attackComplexity": "MEDIUM",
+          "attackVector": "NETWORK",
+          "baseScore": 4.3,
+          "baseSeverity": "MEDIUM",
+          "exploitabilityScore": 8.6,
+          "nvdReferences": [
+            {
+              "source": "ykramarz@cisco.com",
+              "tags": [
+                "Vendor Advisory"
+              ],
+              "url": "http://tools.cisco.com/security/center/content/CiscoSecurityNotice/CVE-2014-2120"
+            },
+            {
+              "source": "ykramarz@cisco.com",
+              "url": "http://www.securityfocus.com/bid/66290"
+            },
+            {
+              "source": "ykramarz@cisco.com",
+              "url": "http://www.securitytracker.com/id/1029935"
+            }
+          ],
+          "vulnStatus": "Analyzed"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Androxgh0st"
+          ],
+          "affectedIndustries": [],
+          "communityAdversaries": [],
+          "communityAffectedIndustries": [],
+          "communityMalwareFamilies": [
+            "Mozi",
+            "Androxgh0st"
+          ],
+          "malwareFamiles": [
+            "Mozi",
+            "Androxgh0st"
+          ]
+        }
+      ],
+      "product": "Adaptive Security Appliance (ASA)",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Cisco Adaptive Security Appliance (ASA) contains a cross-site scripting (XSS) vulnerability in the WebVPN login page. This vulnerability allows remote attackers to inject arbitrary web script or HTML via an unspecified parameter.",
+      "vendorProject": "Cisco",
+      "vulnerabilityName": "Cisco Adaptive Security Appliance (ASA) Cross-Site Scripting (XSS) Vulnerability"
+    },
+    {
+      "_id": "6733a809054d15351e7dd490",
+      "cveID": "CVE-2021-26086",
+      "dateAdded": "2024-11-12",
+      "dueDate": "2024-12-03",
+      "githubPocs": [
+        "https://github.com/ColdFusionX/CVE-2021-26086",
+        "https://github.com/Jeromeyoung/CVE-2021-26086"
+      ],
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": "https://jira.atlassian.com/browse/JRASERVER-72695 ; https://nvd.nist.gov/vuln/detail/CVE-2021-26086",
+      "nvdData": [
+        {
+          "attackComplexity": "LOW",
+          "attackVector": "NETWORK",
+          "baseScore": 5.3,
+          "baseSeverity": "MEDIUM",
+          "exploitabilityScore": 3.9,
+          "nvdReferences": [
+            {
+              "source": "security@atlassian.com",
+              "tags": [
+                "Exploit",
+                "Third Party Advisory",
+                "VDB Entry"
+              ],
+              "url": "http://packetstormsecurity.com/files/164405/Atlassian-Jira-Server-Data-Center-8.4.0-File-Read.html"
+            },
+            {
+              "source": "security@atlassian.com",
+              "tags": [
+                "Issue Tracking",
+                "Vendor Advisory"
+              ],
+              "url": "https://jira.atlassian.com/browse/JRASERVER-72695"
+            }
+          ],
+          "vulnStatus": "Modified"
+        }
+      ],
+      "openThreatData": [
+        {
+          "adversaries": [
+            "Androxgh0st"
+          ],
+          "affectedIndustries": [],
+          "communityAdversaries": [
+            "N/A"
+          ],
+          "communityAffectedIndustries": [
+            "Individuals"
+          ],
+          "communityMalwareFamilies": [
+            "Netexecutablemicrosoft",
+            "Ransom:linux/darkradiation.a!mtb",
+            "Delphi",
+            "Backdoor:win32/r2d2.a",
+            "Androxgh0st",
+            "Trojandownloader:linux/morila!mtb",
+            "Slf:mamacsemacro.a",
+            "Trojandropper:win32/fakeflexnet.a",
+            "Mozi",
+            "Bv:telegrambot-a\\ [trj]",
+            "Sf:shellcode-dz\\ [trj]"
+          ],
+          "malwareFamiles": [
+            "Mozi",
+            "Androxgh0st"
+          ]
+        }
+      ],
+      "product": "Jira Server and Data Center",
+      "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+      "shortDescription": "Atlassian Jira Server and Data Center contain a path traversal vulnerability that allows a remote attacker to read particular files in the /WEB-INF/web.xml endpoint.",
+      "vendorProject": "Atlassian",
+      "vulnerabilityName": "Atlassian Jira Server and Data Center Path Traversal Vulnerability"
+    }
+  ]
+}
