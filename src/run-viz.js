@@ -29,7 +29,7 @@ const load_db = async () => {
             return prom;
         },
         onmessage: (event) => {
-            console.log(event);
+            console.debug("Message:", event);
             if (queryTimes[event.data.id]) {
                 console.log("Query", event.data.id, "completed in",
                             (new Date()) - (queryTimes[event.data.id]));
@@ -51,43 +51,30 @@ const load_db = async () => {
 
     worker.onmessage = dbConnection.onmessage;
 
+    // Open the file
     worker.postMessage({
         id: next_id++,
         action:"open",
-        buffer: buf, /*Optional. An ArrayBuffer representing an SQLite Database file*/
+        buffer: buf,
     });
 
     return dbConnection;
 }
 
-const run = async () => {
-    console.log("loading db...")
-    console.time("DB load")
-    const db = await load_db();
-    console.log("DB:", db);
-    console.timeEnd("DB load")
+const render_query_barplot = async (db, query, params, view) => {
+    const svg = view.svg;
+    const margin = view.margin;
+    return db.query(query, params).then((result) => {
+        // Clear svg
+        svg._groups.map(i => i.map(j => j.innerHTML = ''));
 
-    // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 30, bottom: 80, left: 80},
-        width = document.body.clientWidth - margin.left - margin.right,
-        height = document.body.clientHeight - margin.top - margin.bottom;
-
-    // append the svg object to the body of the page
-    const svg = d3.select("#viz_area")
-    //  .attr("width", width + margin.left + margin.right)
-    //  .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
-
-    db.query(
-        "SELECT CONCAT(cvssData__accessVector, ' & ', cvssData__accessComplexity) as CX, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY CX;"
-    ).then((result) => {
         const data = result.data.results[0];
         const values = data.values;
 
+        const testbar = document.getElementById('testbar');
+
         const width = document.body.clientWidth - margin.left - margin.right;
-        const height = document.body.clientHeight - margin.top - margin.bottom;
+        const height = document.body.clientHeight - margin.top - margin.bottom - testbar.clientHeight;
 
         // Add X axis
         const x = d3.scaleBand()
@@ -121,5 +108,39 @@ const run = async () => {
             .attr("height", function(d) { return height - y(d[1]); })
             .attr("fill", "#69b3a2");
     });
+};
+
+const run = async () => {
+    console.log("loading db...")
+    console.time("DB load")
+    const db = await load_db();
+    console.log("DB:", db);
+    console.timeEnd("DB load")
+
+    const testbar = document.getElementById('testbar');
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 30, bottom: 80, left: 80},
+        width = document.body.clientWidth - margin.left - margin.right,
+        height = document.body.clientHeight - margin.top - margin.bottom - testbar.clientHeight;
+
+    // append the svg object to the body of the page
+    const svg = d3.select("#viz_area")
+    //  .attr("width", width + margin.left + margin.right)
+    //  .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+    const input = testbar.getElementsByTagName('input')[0];
+    const barplot_btn = testbar.querySelector('button[name="barplot"]');
+
+    barplot_btn.onclick = () => render_query_barplot(
+        db,
+        input.value,
+        {},
+        {svg, margin},
+    );
+    barplot_btn.onclick();
 };
 window.onload = run;

@@ -15,7 +15,15 @@
     </style>
   </head>
   <body>
-    <svg id="viz_area" height="100vh" width="100vw"></svg>
+    <nav id="testbar">
+      <input
+        style="width: 100%; display: block;"
+        type="text"
+        value="SELECT CONCAT(cvssData__accessVector, ' & ', cvssData__accessComplexity) as CX, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY CX;" />
+      <button name="barplot">Barplot</button>
+    </nav>
+
+    <svg id="viz_area"></svg>  <!-- height="100vh" width="100vw" -->
 
     <script src="./run-viz.js"></script>
   </body>
