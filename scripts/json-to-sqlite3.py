@@ -224,13 +224,18 @@ def ingest_row_in_db(data, cursor, main_table_name):
                     ingestion_fields = ['__value__']
                     ingestion_values = [it]
 
-                query = f'INSERT INTO {inner_table_name} ({", ".join(ingestion_fields)}) VALUES ({", ".join(["?"] * len(ingestion_values))});'
+                sets = zip(ingestion_fields, ingestion_values)
+                sets_str = [
+                    f"{field}=?"
+                    for field in ingestion_fields
+                ]
+                query = f'UPDATE {inner_table_name} SET {", ".join(sets_str)} WHERE rowid=?;'
                 if not ingestion_values:
                     # TODO: There's an issue here :\
                     # print("N", node)
                     pass
                 else:
-                    cursor.execute(query, ingestion_values)
+                    cursor.execute(query, ingestion_values + [inner_row_id])
 
                 ingestion_fields = outer_ingestion_fields
                 ingestion_values = outer_ingestion_values
@@ -257,9 +262,10 @@ def ingest_row_in_db(data, cursor, main_table_name):
     for k, v in data.items():
         recur(v, (k,), main_row_id, main_table_name)
 
-def ingest_in_db(fpath, db, main_table_name, file_lines):
+def ingest_in_db(fpath, db, main_table_name, file_lines, pk):
     count = 0
     cursor = db.cursor()
+    known_pks = set()
     with open(fpath) as f:
         for line in tqdm.tqdm(
                 f,
@@ -268,7 +274,10 @@ def ingest_in_db(fpath, db, main_table_name, file_lines):
                 desc='[2/2] Ingesting data'
         ):
             data = json.loads(line)
-            ingest_row_in_db(data, cursor, main_table_name)
+            data_id = data[pk]
+            if data_id not in known_pks:
+                ingest_row_in_db(data, cursor, main_table_name)
+            known_pks.add(data_id)
             count += 1
             # if count >= 1000*10:
             #     break
@@ -288,5 +297,5 @@ if __name__ == '__main__':
     schema = get_schema_from_file(sys.argv[1], file_lines)
     ddl = generate_create_table_from_schema(schema, sys.argv[3], sys.argv[4])
     db = build_db_with_schema(sys.argv[2], ddl)
-    ingest_in_db(sys.argv[1], db, sys.argv[3], file_lines)
+    ingest_in_db(sys.argv[1], db, sys.argv[3], file_lines, sys.argv[4])
     db.close()
