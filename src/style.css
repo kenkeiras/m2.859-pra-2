@@ -30,6 +30,19 @@ button {
 button:disabled {
     cursor: not-allowed;
 }
+
+#attribution {
+    background-color: white;
+    box-shadow: 0 0 2px 2px rgba(0,0,0,0.3);
+    z-index: 1000;
+    border-bottom-left-radius: 5px;
+    position: fixed;
+    top:0 ;
+    right: 0;
+    padding: 1ex;
+    font-size: small;
+}
+
 /* Plots */
 #tooltip {
     position: absolute;
