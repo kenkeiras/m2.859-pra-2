@@ -8,10 +8,8 @@ const render_query_lineplot = async (db, query, params, view) => {
         const data = result.data.results[0];
         const values = data.values;
 
-        const testbar = document.getElementById('testbar');
-
         const width = document.body.clientWidth - margin.left - margin.right;
-        const height = document.body.clientHeight - margin.top - margin.bottom - testbar.clientHeight;
+        const height = document.body.clientHeight - margin.top - margin.bottom;
 
         // Add X axis
         const x = d3.scaleLinear()

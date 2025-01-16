@@ -21,12 +21,8 @@ const render_query_barplot = async (db, query, params, view, opts) => {
             stacked = true;
         }
 
-        const testbar = document.getElementById('testbar');
-
         const width = document.body.clientWidth - margin.left - margin.right;
-        const height = document.body.clientHeight - margin.top - margin.bottom - testbar.clientHeight;
-
-
+        const height = document.body.clientHeight - margin.top - margin.bottom;
 
         if (!stacked) {
             // Add X axis

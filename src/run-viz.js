@@ -4,7 +4,7 @@ const load_db = async () => {
         locateFile: file => `./sqljs/v1.12.0/${file}`
     });
     const dataPromise = fetch(
-        "../data/merged.sqlite",
+        "../data/merged-smaller.sqlite",
         {cache: "force-cache"},
     ).then(res => res.arrayBuffer());
     const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
@@ -78,39 +78,11 @@ const run = async () => {
     for (const btn of document.querySelectorAll('nav button')) {
         btn.disabled = true;
     }
-    
-    const testbar = document.getElementById('testbar');
-    const build_graph_btn = testbar.querySelector('button[name="show_graph"]');
-    let QUERY_BUILDER_GRAPH_SVG = null;
-
-    fetch('../data/graph.svg').then(res => {
-        res.text().then(svg => {
-            QUERY_BUILDER_GRAPH_SVG = svg;
-            build_graph_btn.disabled = false;
-            show_query_builder(
-                document.querySelector('#query_builder'), 
-                svg
-            );
-        })
-    })
-
-    console.log("loading db...")
-    console.time("DB load")
-    const db = await load_db();
-    console.log("DB:", db);
-    console.timeEnd("DB load")
-
-    for (const btn of document.querySelectorAll('nav button')) {
-        if (btn != build_graph_btn) {
-            btn.disabled = false;
-        }
-    }
-
 
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 80, left: 80},
         width = document.body.clientWidth - margin.left - margin.right,
-        height = document.body.clientHeight - margin.top - margin.bottom - testbar.clientHeight;
+        height = document.body.clientHeight - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     const svg = d3.select("#viz_area")
@@ -120,37 +92,65 @@ const run = async () => {
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
-    const input = testbar.getElementsByTagName('input')[0];
-    const barplot_btn = testbar.querySelector('button[name="barplot"]');
-    const percent_barplot_btn = testbar.querySelector('button[name="percent_barplot"]');
-    const lineplot_btn = testbar.querySelector('button[name="lineplot"]');
-    const areaplot_btn = testbar.querySelector('button[name="areaplot"]');
+    
+    // const testbar = document.getElementById('testbar');
+    // const build_graph_btn = testbar.querySelector('button[name="show_graph"]');
+    let QUERY_BUILDER_GRAPH_SVG = null;
 
-    barplot_btn.onclick = () => render_query_barplot(
-        db,
-        input.value,
-        {},
-        {svg, margin},
-    );
-    percent_barplot_btn.onclick = () => render_query_barplot(
-        db,
-        input.value,
-        {},
-        {svg, margin},
-        {percent_stack_plot: true}
-    );
-    lineplot_btn.onclick = () => render_query_lineplot(
-        db,
-        input.value,
-        {},
-        {svg, margin},
-    );
-    areaplot_btn.onclick = () => render_query_areaplot(
-        db,
-        input.value,
-        {},
-        {svg, margin},
-    );
+    fetch('../data/graph-smaller.svg').then(res => {
+        res.text().then(svg_graph => {
+            QUERY_BUILDER_GRAPH_SVG = svg;
+            // build_graph_btn.disabled = false;
+            show_query_builder(
+                document.querySelector('#query_builder'), 
+                svg_graph, svg, margin,
+            );
+        })
+    })
+
+    console.log("loading db...")
+    console.time("DB load")
+    window.DB_LOADER = load_db();
+    const db = await window.DB_LOADER;
+    console.log("DB:", db);
+    console.timeEnd("DB load")
+
+    for (const btn of document.querySelectorAll('nav button')) {
+        if (btn != build_graph_btn) {
+            btn.disabled = false;
+        }
+    }
+    // const input = testbar.getElementsByTagName('input')[0];
+    // const barplot_btn = testbar.querySelector('button[name="barplot"]');
+    // const percent_barplot_btn = testbar.querySelector('button[name="percent_barplot"]');
+    // const lineplot_btn = testbar.querySelector('button[name="lineplot"]');
+    // const areaplot_btn = testbar.querySelector('button[name="areaplot"]');
+
+    // barplot_btn.onclick = () => render_query_barplot(
+    //     db,
+    //     input.value,
+    //     {},
+    //     {svg, margin},
+    // );
+    // percent_barplot_btn.onclick = () => render_query_barplot(
+    //     db,
+    //     input.value,
+    //     {},
+    //     {svg, margin},
+    //     {percent_stack_plot: true}
+    // );
+    // lineplot_btn.onclick = () => render_query_lineplot(
+    //     db,
+    //     input.value,
+    //     {},
+    //     {svg, margin},
+    // );
+    // areaplot_btn.onclick = () => render_query_areaplot(
+    //     db,
+    //     input.value,
+    //     {},
+    //     {svg, margin},
+    // );
 
 };
 window.onload = run;

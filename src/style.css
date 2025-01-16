@@ -4,14 +4,38 @@ html, body, svg {
     padding: 0;
     width: 100vw;
     height: 100vh;
+
+    font-family: 'Atkinson Hyperlegible', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url('./fonts/atkinson-hyperlegible/eot/Atkinson-Hyperlegible-Regular-102.eot');
+    src: url('./fonts/atkinson-hyperlegible/eot/Atkinson-Hyperlegible-Regular-102.eot') format('embedded-opentype'),
+         url('./fonts/atkinson-hyperlegible/woff2/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2'),
+         url('./fonts/atkinson-hyperlegible/woff/Atkinson-Hyperlegible-Regular-102.woff') format('woff'),
+         url('./fonts/atkinson-hyperlegible/ttf/Atkinson-Hyperlegible-Regular-102.ttf') format('truetype');
+
+    /* Make sure text is displayed ASAP, even if this font is not ready. */
+    font-display: swap;
+}
+
+button {
+    cursor: pointer;
+
+    /* Revert button theming. */
+    font-family: 'Atkinson Hyperlegible', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 110%;
+}
+button:disabled {
+    cursor: not-allowed;
+}
 /* Plots */
 
 
 /* Query builder */
 #query_builder {
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     z-index: 10;
@@ -19,7 +43,7 @@ html, body, svg {
     user-select: none;
 }
 
-#query_builder[disabled="true"] {
+#query_builder.hidden {
     display: none;
 }
 
@@ -33,4 +57,84 @@ html, body, svg {
 
 #query_builder .nodetitle {
     font-weight: bold;
+}
+
+/* Query catalog */
+#query_catalog_backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    background: rgba(0,0,0,0.7);
+}
+
+#query_catalog_container{
+    position: relative;
+    height: 100vh;
+}
+
+#query_catalog {
+    position: absolute;
+    max-width: 90vw;
+    max-height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: white;
+    margin: 0 auto;
+    box-shadow: 0 0 2px 2px rgba(0,0,0,0.3);
+    z-index: 60;
+    padding: 1rem;
+}
+#query_catalog button {
+    margin: 1ex;
+
+}
+
+#query_catalog_backdrop.hidden {
+    display: none;
+}
+
+/* Loading button */
+
+/* Floating Action Buttons */
+#fabspace {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    box-shadow: 0 0 1px 2px rgba(0,0,0,0.3);
+    background: #444;
+    z-index: 30;
+    border-radius: 5px;
+}
+
+button#run_catalog_query {
+    border-width: 0 0 1px 0;
+}
+button#show_graph {
+    border-width: 0 0 0 0;
+}
+button#run_graph_query {
+    border-width: 1px 0 0 0;
+}
+
+#fabspace button {
+    border-color: #d70;
+    background-color: #fa0;
+    display: block;
+    border-radius: 0 0 5px 5px;
+}
+
+#fabspace button.offline ,
+#fabspace button:disabled {
+    background-color: #840;
+    color: #777;
+}
+
+#fabspace button.offline {
+    pointer-events: none;
+    cursor: not-allowed;
 }

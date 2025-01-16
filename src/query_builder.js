@@ -61,13 +61,16 @@ const wire_svg = (dom) => {
     };
 };
 
-const show_query_builder = (builder_space, graph_svg) => {
+const show_query_builder = (builder_space, graph_svg, plot_space, margin_conf) => {
     builder_space.setAttribute('disabled', 'false');
     builder_space.innerHTML = graph_svg;
 
     const run_query_btn = document.getElementById('run_graph_query');
     const open_catalog_query_btn = document.getElementById('run_catalog_query');
-    open_catalog_query_btn.disabled = false;
+    run_query_btn.classList.remove('offline');
+
+    const show_graph_btn = document.getElementById('show_graph');
+    show_graph_btn.classList.add('offline');
 
     const svg = builder_space.firstElementChild;
 
@@ -109,5 +112,51 @@ const show_query_builder = (builder_space, graph_svg) => {
         run_query_btn.disabled = !(selectedFields.length > 0 && selectedFields.length < 4);
     });
 
+    open_catalog_query_btn.disabled = false;
+    open_catalog_query_btn.onclick = () => {
+        open_query_catalog(queryBuilder, plot_space, margin_conf);
+    }
+
     return queryBuilder;
+}
+
+const hide_query_builder = () => {
+    const query_builder = document.getElementById('query_builder');
+    query_builder.classList.add('hidden');
+
+    const run_query_btn = document.getElementById('run_graph_query');
+    run_query_btn.classList.add('offline');
+
+    const show_graph_btn = document.getElementById('show_graph');
+    show_graph_btn.classList.remove('offline');
+    show_graph_btn.disabled = false;
+};
+
+const close_query_catalog = () => {
+    const query_catalog_backdrop = document.getElementById('query_catalog_backdrop');
+    query_catalog_backdrop.classList.add('hidden');
+};
+
+const open_query_catalog = (queryBuilder, plot_space, margin) => {
+    const query_catalog_backdrop = document.getElementById('query_catalog_backdrop');
+    query_catalog_backdrop.classList.remove('hidden');
+
+    for (const btn of query_catalog_backdrop.getElementsByTagName('button')) {
+        const query = btn.getAttribute('query');
+        if (!!query) {
+            btn.onclick = () => {
+                close_query_catalog();
+                hide_query_builder(queryBuilder);
+                
+                window.DB_LOADER.then(db => {
+                    render_query_barplot(
+                        db,
+                        query,
+                        {},
+                        {svg: plot_space, margin},
+                    );
+                });
+            }
+        }
+    }
 }
