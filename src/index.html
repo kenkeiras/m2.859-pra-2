@@ -19,12 +19,48 @@
       <input
         style="width: 100%; display: block;"
         type="text"
-        value="SELECT CONCAT(cvssData__accessVector, ' & ', cvssData__accessComplexity) as CX, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY CX;" />
+        id="cmdbar"
+        value="" />
+      <button onclick="cmdbar.value = 'SELECT CONCAT(cvssData__accessVector, \' & \', cvssData__accessComplexity) as CX, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY CX;';">
+        qVectores
+      </button>
+      <button onclick="cmdbar.value = 'SELECT baseSeverity, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY baseSeverity;'">
+        qSevCat
+      </button>
+      <button onclick="cmdbar.value = 'SELECT ROUND(cvssData__baseScore) as CX, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY CX;'">
+        qSevScores
+      </button>
+      <button onclick="cmdbar.value = `SELECT
+    [CWE-ID],
+    IFNULL(METRICS.cvssV3_1__baseSeverity,
+    IFNULL(METRICS.cvssV4_0__baseSeverity,
+    IFNULL(METRICS.cvssV3_0__baseSeverity,
+    NULL
+    ))),
+    COUNT(*)
+FROM cwe AS CWE
+JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
+    ON 'CWE-' || CWE.[CWE-ID] = DESCR.cweId
+JOIN cve__containers__cna__problemTypes AS PROBS
+    ON DESCR.__parent__ = PROBS.rowid
+JOIN cve AS CVE
+    ON PROBS.__parent__ = cve.rowid
+JOIN cve__containers__cna__metrics AS METRICS
+    ON CVE.rowid = METRICS.__parent__
+    GROUP BY [CWE-ID]
+    ;`.replaceAll('\n', '  ');">
+        qCweBySev
+      </button>
       <button name="barplot">Barplot</button>
+      <button name="lineplot">Lineplot</button>
+      <button name="areaplot">Areaplot</button>
     </nav>
 
     <svg id="viz_area"></svg>  <!-- height="100vh" width="100vw" -->
 
+    <script src="./plots/barplot.js"></script>
+    <script src="./plots/lineplot.js"></script>
+    <script src="./plots/areaplot.js"></script>
     <script src="./run-viz.js"></script>
   </body>
 </html>

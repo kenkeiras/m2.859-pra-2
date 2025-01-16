@@ -4,7 +4,7 @@ const load_db = async () => {
         locateFile: file => `./sqljs/v1.12.0/${file}`
     });
     const dataPromise = fetch(
-        "../data/nist/db.sqlite",
+        "../data/merged.sqlite",
         {cache: "force-cache"},
     ).then(res => res.arrayBuffer());
     const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
@@ -17,6 +17,12 @@ const load_db = async () => {
         query: (query, params) => {
             const action_id = next_id++;
             queryTimes[action_id] = new Date();
+            if (Object.keys(params || {}).length == 0) {
+                console.debug("Running query", query);
+            }
+            else {
+                console.debug("Running query", query, "params", params);
+            }
             const prom = new Promise((resolve) => {
                 listeners[action_id] = [resolve];
                 worker.postMessage({
@@ -58,64 +64,29 @@ const load_db = async () => {
         buffer: buf,
     });
 
+    // Open the file
+    worker.postMessage({
+        id: next_id++,
+        action:"open",
+        buffer: buf,
+    });
+
     return dbConnection;
 }
 
-const render_query_barplot = async (db, query, params, view) => {
-    const svg = view.svg;
-    const margin = view.margin;
-    return db.query(query, params).then((result) => {
-        // Clear svg
-        svg._groups.map(i => i.map(j => j.innerHTML = ''));
-
-        const data = result.data.results[0];
-        const values = data.values;
-
-        const testbar = document.getElementById('testbar');
-
-        const width = document.body.clientWidth - margin.left - margin.right;
-        const height = document.body.clientHeight - margin.top - margin.bottom - testbar.clientHeight;
-
-        // Add X axis
-        const x = d3.scaleBand()
-              .range([ 0, width ])
-              .domain(values.map(function(d) { return d[0]; }))
-              .padding(0.2);
-
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("transform", "rotate(-25)")
-        ;
-
-        // Add Y axis
-        var y = d3.scaleLinear()
-            .domain([0, Math.max(...values.map(v => v[1]))])
-            .range([ height, 0]);
-        svg.append("g")
-            .call(d3.axisLeft(y));
-
-        // Add dots
-        svg.selectAll('mybar')
-            .data(values)
-            .enter()
-            .append("rect")
-            .attr('x', function(d) {return x(d[0]);})
-            .attr('y', function(d) {return y(d[1]);})
-            .attr("width", x.bandwidth())
-            .attr("height", function(d) { return height - y(d[1]); })
-            .attr("fill", "#69b3a2");
-    });
-};
-
 const run = async () => {
+    for (const btn of document.getElementsByTagName('button')) {
+        btn.disabled = true;
+    }
     console.log("loading db...")
     console.time("DB load")
     const db = await load_db();
     console.log("DB:", db);
     console.timeEnd("DB load")
+
+    for (const btn of document.getElementsByTagName('button')) {
+        btn.disabled = false;
+    }
 
     const testbar = document.getElementById('testbar');
 
@@ -134,6 +105,8 @@ const run = async () => {
 
     const input = testbar.getElementsByTagName('input')[0];
     const barplot_btn = testbar.querySelector('button[name="barplot"]');
+    const lineplot_btn = testbar.querySelector('button[name="lineplot"]');
+    const areaplot_btn = testbar.querySelector('button[name="areaplot"]');
 
     barplot_btn.onclick = () => render_query_barplot(
         db,
@@ -141,6 +114,18 @@ const run = async () => {
         {},
         {svg, margin},
     );
-    barplot_btn.onclick();
+    lineplot_btn.onclick = () => render_query_lineplot(
+        db,
+        input.value,
+        {},
+        {svg, margin},
+    );
+    areaplot_btn.onclick = () => render_query_areaplot(
+        db,
+        input.value,
+        {},
+        {svg, margin},
+    );
+
 };
 window.onload = run;
