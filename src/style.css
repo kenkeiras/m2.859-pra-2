@@ -90,8 +90,9 @@ button:disabled {
     padding: 1rem;
 }
 #query_catalog button {
-    margin: 1ex;
-
+    margin: 1ex auto;
+    display: block;
+    width: 100%
 }
 
 #query_catalog_backdrop.hidden {

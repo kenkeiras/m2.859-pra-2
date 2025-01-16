@@ -29,97 +29,127 @@
               height="100"
               style="width: 5rem; height: 5rem; display: block; margin: 0 auto;" 
             />
-            Compara distribución de riesgo de diferentes vectores de ataque.
+            Severidades de diferentes vectores de ataque.
           </button>
-          <button 
+          <!-- <button 
             query='SELECT baseSeverity, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY baseSeverity;'"
             shape=""
           >
             qSevCat
-          </button>
-          <button onclick="cmdbar.value = 'SELECT ROUND(cvssData__baseScore) as CX, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY CX;'">
+          </button> -->
+          <!-- <button onclick="cmdbar.value = 'SELECT ROUND(cvssData__baseScore) as CX, COUNT(*) FROM nist_cve__metrics__cvssMetricV2 GROUP BY CX;'">
             qSevScores
+          </button> -->
+          <button 
+            query="SELECT
+                  'CWE-' || [CWE-ID] || ': ' || SUBSTR([Name], 1, 20) || '…',
+                  IFNULL(METRICS.cvssV3_1__baseSeverity,
+                  IFNULL(METRICS.cvssV4_0__baseSeverity,
+                  IFNULL(METRICS.cvssV3_0__baseSeverity,
+                  NULL
+                  ))) as Severity,
+                  COUNT(*)
+              FROM cwe AS CWE
+              JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
+                  ON 'CWE-' || CWE.[CWE-ID] = DESCR.cweId
+              JOIN cve__containers__cna__problemTypes AS PROBS
+                  ON DESCR.__parent__ = PROBS.rowid
+              JOIN cve AS CVE
+                  ON PROBS.__parent__ = cve.rowid
+              JOIN cve__containers__cna__metrics AS METRICS
+                  ON CVE.rowid = METRICS.__parent__
+                  WHERE Severity IS NOT NULL
+                  GROUP BY [CWE-ID], Severity
+                  ;"
+            >
+            <img 
+              src="./res/chart-column-solid.svg"
+              width="100"
+              height="100"
+              style="width: 5rem; height: 5rem; display: block; margin: 0 auto;" 
+            />
+            Severidades producidas por cada tipo de debilidad.
           </button>
-          <button onclick="cmdbar.value = `SELECT
-        [CWE-ID],
-        IFNULL(METRICS.cvssV3_1__baseSeverity,
-        IFNULL(METRICS.cvssV4_0__baseSeverity,
-        IFNULL(METRICS.cvssV3_0__baseSeverity,
-        NULL
-        ))) as Severity,
-        COUNT(*)
-    FROM cwe AS CWE
-    JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
-        ON 'CWE-' || CWE.[CWE-ID] = DESCR.cweId
-    JOIN cve__containers__cna__problemTypes AS PROBS
-        ON DESCR.__parent__ = PROBS.rowid
-    JOIN cve AS CVE
-        ON PROBS.__parent__ = cve.rowid
-    JOIN cve__containers__cna__metrics AS METRICS
-        ON CVE.rowid = METRICS.__parent__
-        WHERE Severity IS NOT NULL
-        GROUP BY [CWE-ID], Severity
-        ;`.replaceAll('\n', '  ');">
-            qCweBySev
-          </button>
-          <button onclick="cmdbar.value = `SELECT
-        IIF([Functional Areas] <> '', SUBSTR([Functional Areas], 3, INSTR(SUBSTR([Functional Areas], 3), ':') - 1), 'Unclassified') AS AREA,
-        IFNULL(METRICS.cvssV3_1__baseSeverity,
-        IFNULL(METRICS.cvssV4_0__baseSeverity,
-        IFNULL(METRICS.cvssV3_0__baseSeverity,
-        NULL
-        ))) as Severity,
-        COUNT(*) AS cnt
-    FROM cwe AS CWE
-    JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
-        ON 'CWE-' || CWE.[CWE-ID] = DESCR.cweId
-    JOIN cve__containers__cna__problemTypes AS PROBS
-        ON DESCR.__parent__ = PROBS.rowid
-    JOIN cve AS CVE
-        ON PROBS.__parent__ = cve.rowid
-    JOIN cve__containers__cna__metrics AS METRICS
-        ON CVE.rowid = METRICS.__parent__
-        GROUP BY AREA, Severity
-        ;`.replaceAll('\n', '  ');">
-            qAreaBySev
-          </button>
-          <button onclick="cmdbar.value = `SELECT PLAT.__value__,
-          IFNULL(METRICS.cvssV3_1__baseSeverity,
-          IFNULL(METRICS.cvssV4_0__baseSeverity,
-          IFNULL(METRICS.cvssV3_0__baseSeverity,
-          NULL
-          ))) as Sev,
-          COUNT(*) AS cnt
-          FROM cve__containers__cna__affected__0__platforms AS PLAT
-          JOIN cve__containers__cna__affected AS AFFECTED
-            ON PLAT.__parent__ = AFFECTED.rowid
+          <button 
+            query="SELECT
+              IIF([Functional Areas] <> '', SUBSTR([Functional Areas], 3, INSTR(SUBSTR([Functional Areas], 3), ':') - 1), 'Unclassified') AS AREA,
+              IFNULL(METRICS.cvssV3_1__baseSeverity,
+              IFNULL(METRICS.cvssV4_0__baseSeverity,
+              IFNULL(METRICS.cvssV3_0__baseSeverity,
+              NULL
+              ))) as Severity,
+              COUNT(*) AS cnt
+          FROM cwe AS CWE
+          JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
+              ON 'CWE-' || CWE.[CWE-ID] = DESCR.cweId
+          JOIN cve__containers__cna__problemTypes AS PROBS
+              ON DESCR.__parent__ = PROBS.rowid
           JOIN cve AS CVE
-            ON AFFECTED.__parent__ = CVE.rowid
+              ON PROBS.__parent__ = cve.rowid
           JOIN cve__containers__cna__metrics AS METRICS
-            ON CVE.rowid = METRICS.__parent__
-          GROUP BY PLAT.__value__, Sev ORDER BY cnt DESC
-          ;`.replaceAll('\n', '  ');">
-            qPlatBySev
+              ON CVE.rowid = METRICS.__parent__
+              WHERE [Functional Areas] <> ''
+              GROUP BY AREA, Severity
+              ;">
+              <img 
+              src="./res/chart-column-solid.svg"
+              width="100"
+              height="100"
+              style="width: 5rem; height: 5rem; display: block; margin: 0 auto;" 
+            />
+            Severidades dividas por área funcional.
           </button>
-          <button onclick="cmdbar.value = `SELECT PLAT.__value__,
-          IFNULL(METRICS.cvssV3_1__baseSeverity,
-          IFNULL(METRICS.cvssV4_0__baseSeverity,
-          IFNULL(METRICS.cvssV3_0__baseSeverity,
-          NULL
-          ))) as Sev,
-          COUNT(*) AS cnt
-          FROM cve__containers__cna__affected__0__platforms AS PLAT
-          JOIN cve__containers__cna__affected AS AFFECTED
-            ON PLAT.__parent__ = AFFECTED.rowid
-          JOIN cve AS CVE
-            ON AFFECTED.__parent__ = CVE.rowid
-          JOIN cve__containers__cna__metrics AS METRICS
-            ON CVE.rowid = METRICS.__parent__
-          WHERE Sev IN ('CRITICAL', 'HIGH')  
-            AND ((upper(PLAT.__value__) LIKE '%WORDPRESS%') OR (upper(PLAT.__value__) LIKE '%JOOMLA%'))      
-          GROUP BY upper(PLAT.__value__), Sev ORDER BY cnt DESC
-          ;`.replaceAll('\n', '  ');">
-            qPlatComp
+          <button 
+            query="SELECT PLAT.__value__,
+                IFNULL(METRICS.cvssV3_1__baseSeverity,
+                IFNULL(METRICS.cvssV4_0__baseSeverity,
+                IFNULL(METRICS.cvssV3_0__baseSeverity,
+                NULL
+                ))) as Sev,
+                COUNT(*) AS cnt
+                FROM cve__containers__cna__affected__0__platforms AS PLAT
+                JOIN cve__containers__cna__affected AS AFFECTED
+                  ON PLAT.__parent__ = AFFECTED.rowid
+                JOIN cve AS CVE
+                  ON AFFECTED.__parent__ = CVE.rowid
+                JOIN cve__containers__cna__metrics AS METRICS
+                  ON CVE.rowid = METRICS.__parent__
+                GROUP BY PLAT.__value__, Sev ORDER BY cnt DESC
+                ;">
+                <img 
+                  src="./res/chart-column-solid.svg"
+                  width="100"
+                  height="100"
+                  style="width: 5rem; height: 5rem; display: block; margin: 0 auto;" 
+                />
+              Severidad de vulnerabilidades para cada plataforma.
+          </button>
+          <button 
+            query="SELECT PLAT.__value__,
+                IFNULL(METRICS.cvssV3_1__baseSeverity,
+                IFNULL(METRICS.cvssV4_0__baseSeverity,
+                IFNULL(METRICS.cvssV3_0__baseSeverity,
+                NULL
+                ))) as Sev,
+                COUNT(*) AS cnt
+                FROM cve__containers__cna__affected__0__platforms AS PLAT
+                JOIN cve__containers__cna__affected AS AFFECTED
+                  ON PLAT.__parent__ = AFFECTED.rowid
+                JOIN cve AS CVE
+                  ON AFFECTED.__parent__ = CVE.rowid
+                JOIN cve__containers__cna__metrics AS METRICS
+                  ON CVE.rowid = METRICS.__parent__
+                WHERE Sev IN ('CRITICAL', 'HIGH')  
+                  AND ((upper(PLAT.__value__) LIKE '%WORDPRESS%') OR (upper(PLAT.__value__) LIKE '%JOOMLA%'))      
+                GROUP BY upper(PLAT.__value__), Sev ORDER BY cnt DESC
+                ;">
+              <img 
+                src="./res/chart-column-solid.svg"
+                width="100"
+                height="100"
+                style="width: 5rem; height: 5rem; display: block; margin: 0 auto;" 
+              />
+            Severidad de vulnerabilidades entre <i>WordPress</i> y <i>Joomla!</i>
           </button>
           <!-- <button name="barplot">Barplot</button>
           <button name="percent_barplot">Percent Barplot</button>
