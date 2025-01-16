@@ -1,4 +1,9 @@
-const render_query_barplot = async (db, query, params, view) => {
+const SEVERITY_KEYS = ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"];
+const MAX_BARS = (width) => 20;
+
+const render_query_barplot = async (db, query, params, view, opts) => {
+    const percent_stack_plot = (opts || {}).percent_stack_plot || false;
+
     const svg = view.svg;
     const margin = view.margin;
     return db.query(query, params).then((result) => {
@@ -21,28 +26,30 @@ const render_query_barplot = async (db, query, params, view) => {
         const width = document.body.clientWidth - margin.left - margin.right;
         const height = document.body.clientHeight - margin.top - margin.bottom - testbar.clientHeight;
 
-        // Add X axis
-        const x = d3.scaleBand()
-              .range([ 0, width ])
-              .domain(values.map(function(d) { return d[xCol]; }))
-              .padding(0.2);
 
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("transform", "rotate(-25)")
-        ;
 
         if (!stacked) {
+            // Add X axis
+            const x = d3.scaleBand()
+                .range([ 0, width ])
+                .domain(values.map(function(d) { return d[xCol]; }))
+                .padding(0.2);
 
-            // Add Y axis
+              // Add Y axis
             var y = d3.scaleLinear()
                 .domain([0, Math.max(...values.map(v => v[countCol]))])
                 .range([ height, 0]);
             svg.append("g")
                 .call(d3.axisLeft(y));
+
+
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("transform", "rotate(-25)")
+                ;
 
             svg.selectAll('mybar')
                 .data(values)
@@ -62,10 +69,21 @@ const render_query_barplot = async (db, query, params, view) => {
                 x => x[countCol]);
 
             console.log(JSON.parse(JSON.stringify(stacks)), keys);
-            if (keys.map(v => ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"].indexOf(v) >= 0).every(v => v)) {
+            if (keys.map(v => SEVERITY_KEYS.indexOf(v) >= 0).every(v => v)) {
                 // Severity keys
-                keys = ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"];
+                keys = SEVERITY_KEYS;
+
+                stacks = sort_severity_stacks(stacks);
             }
+            stacks = stacks.slice(0, MAX_BARS(width));
+            console.log("Sliced stacks", stacks);
+
+            // Add X axis
+            const x = d3.scaleBand()
+            .range([ 0, width ])
+            .domain(stacks.map(function(d) { return d.__x__; }))
+            .padding(0.2);
+
 
              // color palette = one color per subgroup
             var color = d3.scaleOrdinal()
@@ -73,7 +91,6 @@ const render_query_barplot = async (db, query, params, view) => {
                 .range(['#00aa00', '#88bb00', '#bb8800', '#f7958a', '#e51600'])
 
             // Should all reach top?
-            const percent_stack_plot = true;
             if (percent_stack_plot) {
                 // Add Y axis
                 var y = d3.scaleLinear()
@@ -103,6 +120,15 @@ const render_query_barplot = async (db, query, params, view) => {
             var stackedData = d3.stack()
                 .keys(keys)
             (stacks);
+
+
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("transform", "rotate(-25)")
+            ;
 
             // Show the bars
             svg.append("g")
@@ -156,4 +182,25 @@ function stack(data, get_x_key, get_stack_key, get_count) {
     }
 
     return [Object.values(results), keys];
+}
+
+function sort_severity_stacks(data) {
+    // Show first the ones with data in the highest severities
+    return sort_stacks_by_priority_cascade(data, SEVERITY_KEYS.concat([]).reverse());
+}
+
+function sort_stacks_by_priority_cascade(data, prio_cascade) {
+    return data.sort(
+        (a, b) => {
+            for (const key of prio_cascade) {
+                const av = a[key] || 0;
+                const bv = b[key] || 0;
+
+                if (av != bv) {
+                    return bv - av;
+                }
+            }
+            return 0;
+        }
+    )
 }

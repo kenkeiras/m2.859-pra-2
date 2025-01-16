@@ -105,6 +105,7 @@ const run = async () => {
 
     const input = testbar.getElementsByTagName('input')[0];
     const barplot_btn = testbar.querySelector('button[name="barplot"]');
+    const percent_barplot_btn = testbar.querySelector('button[name="percent_barplot"]');
     const lineplot_btn = testbar.querySelector('button[name="lineplot"]');
     const areaplot_btn = testbar.querySelector('button[name="areaplot"]');
 
@@ -113,6 +114,13 @@ const run = async () => {
         input.value,
         {},
         {svg, margin},
+    );
+    percent_barplot_btn.onclick = () => render_query_barplot(
+        db,
+        input.value,
+        {},
+        {svg, margin},
+        {percent_stack_plot: true}
     );
     lineplot_btn.onclick = () => render_query_lineplot(
         db,

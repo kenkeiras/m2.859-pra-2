@@ -69,12 +69,30 @@ JOIN cve AS CVE
     ON PROBS.__parent__ = cve.rowid
 JOIN cve__containers__cna__metrics AS METRICS
     ON CVE.rowid = METRICS.__parent__
-    ORDER BY cnt
     GROUP BY AREA, Severity
     ;`.replaceAll('\n', '  ');">
         qAreaBySev
       </button>
+      <button onclick="cmdbar.value = `SELECT PLAT.__value__,
+      IFNULL(METRICS.cvssV3_1__baseSeverity,
+      IFNULL(METRICS.cvssV4_0__baseSeverity,
+      IFNULL(METRICS.cvssV3_0__baseSeverity,
+      NULL
+      ))) as Sev,
+      COUNT(*) AS cnt
+      FROM cve__containers__cna__affected__0__platforms AS PLAT
+      JOIN cve__containers__cna__affected AS AFFECTED
+        ON PLAT.__parent__ = AFFECTED.rowid
+      JOIN cve AS CVE
+        ON AFFECTED.__parent__ = CVE.rowid
+      JOIN cve__containers__cna__metrics AS METRICS
+        ON CVE.rowid = METRICS.__parent__
+      GROUP BY PLAT.__value__, Sev ORDER BY cnt DESC
+      ;`.replaceAll('\n', '  ');">
+        qPlatBySev
+      </button>
       <button name="barplot">Barplot</button>
+      <button name="percent_barplot">Percent Barplot</button>
       <button name="lineplot">Lineplot</button>
       <button name="areaplot">Areaplot</button>
     </nav>
