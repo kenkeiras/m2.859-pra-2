@@ -91,6 +91,26 @@ JOIN cve__containers__cna__metrics AS METRICS
       ;`.replaceAll('\n', '  ');">
         qPlatBySev
       </button>
+      <button onclick="cmdbar.value = `SELECT PLAT.__value__,
+      IFNULL(METRICS.cvssV3_1__baseSeverity,
+      IFNULL(METRICS.cvssV4_0__baseSeverity,
+      IFNULL(METRICS.cvssV3_0__baseSeverity,
+      NULL
+      ))) as Sev,
+      COUNT(*) AS cnt
+      FROM cve__containers__cna__affected__0__platforms AS PLAT
+      JOIN cve__containers__cna__affected AS AFFECTED
+        ON PLAT.__parent__ = AFFECTED.rowid
+      JOIN cve AS CVE
+        ON AFFECTED.__parent__ = CVE.rowid
+      JOIN cve__containers__cna__metrics AS METRICS
+        ON CVE.rowid = METRICS.__parent__
+      WHERE Sev IN ('CRITICAL', 'HIGH')  
+         AND ((upper(PLAT.__value__) LIKE '%WORDPRESS%') OR (upper(PLAT.__value__) LIKE '%JOOMLA%'))      
+      GROUP BY upper(PLAT.__value__), Sev ORDER BY cnt DESC
+      ;`.replaceAll('\n', '  ');">
+        qPlatComp
+      </button>
       <button name="barplot">Barplot</button>
       <button name="percent_barplot">Percent Barplot</button>
       <button name="lineplot">Lineplot</button>
