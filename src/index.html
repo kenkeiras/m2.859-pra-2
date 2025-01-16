@@ -59,7 +59,7 @@ JOIN cve__containers__cna__metrics AS METRICS
     IFNULL(METRICS.cvssV3_0__baseSeverity,
     NULL
     ))) as Severity,
-    COUNT(*)
+    COUNT(*) AS cnt
 FROM cwe AS CWE
 JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
     ON 'CWE-' || CWE.[CWE-ID] = DESCR.cweId
@@ -69,6 +69,7 @@ JOIN cve AS CVE
     ON PROBS.__parent__ = cve.rowid
 JOIN cve__containers__cna__metrics AS METRICS
     ON CVE.rowid = METRICS.__parent__
+    ORDER BY cnt
     GROUP BY AREA, Severity
     ;`.replaceAll('\n', '  ');">
         qAreaBySev
