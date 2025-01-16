@@ -53,7 +53,7 @@ JOIN cve__containers__cna__metrics AS METRICS
         qCweBySev
       </button>
       <button onclick="cmdbar.value = `SELECT
-    [Functional Areas],
+    IIF([Functional Areas] <> '', SUBSTR([Functional Areas], 3, INSTR(SUBSTR([Functional Areas], 3), ':') - 1), 'Unclassified') AS AREA,
     IFNULL(METRICS.cvssV3_1__baseSeverity,
     IFNULL(METRICS.cvssV4_0__baseSeverity,
     IFNULL(METRICS.cvssV3_0__baseSeverity,
@@ -69,8 +69,7 @@ JOIN cve AS CVE
     ON PROBS.__parent__ = cve.rowid
 JOIN cve__containers__cna__metrics AS METRICS
     ON CVE.rowid = METRICS.__parent__
-    WHERE Severity IS NOT NULL
-    GROUP BY [Functional Areas], Severity
+    GROUP BY AREA, Severity
     ;`.replaceAll('\n', '  ');">
         qAreaBySev
       </button>
