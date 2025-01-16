@@ -75,7 +75,7 @@ const load_db = async () => {
 }
 
 const run = async () => {
-    for (const btn of document.getElementsByTagName('button')) {
+    for (const btn of document.querySelectorAll('nav button')) {
         btn.disabled = true;
     }
     
@@ -100,7 +100,7 @@ const run = async () => {
     console.log("DB:", db);
     console.timeEnd("DB load")
 
-    for (const btn of document.getElementsByTagName('button')) {
+    for (const btn of document.querySelectorAll('nav button')) {
         if (btn != build_graph_btn) {
             btn.disabled = false;
         }

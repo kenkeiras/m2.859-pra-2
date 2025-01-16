@@ -65,6 +65,10 @@ const show_query_builder = (builder_space, graph_svg) => {
     builder_space.setAttribute('disabled', 'false');
     builder_space.innerHTML = graph_svg;
 
+    const run_query_btn = document.getElementById('run_graph_query');
+    const open_catalog_query_btn = document.getElementById('run_catalog_query');
+    open_catalog_query_btn.disabled = false;
+
     const svg = builder_space.firstElementChild;
 
     builder_space.style.top = 0;
@@ -102,9 +106,7 @@ const show_query_builder = (builder_space, graph_svg) => {
 
         console.log('Selected', selectedFields);
 
-        if (selectedFields.length > 0 && selectedFields.length < 4) {
-            // TODO: ENABLE FAB
-        }
+        run_query_btn.disabled = !(selectedFields.length > 0 && selectedFields.length < 4);
     });
 
     return queryBuilder;
