@@ -35,14 +35,15 @@ const render_query_barplot = async (db, query, params, view) => {
             .attr("transform", "rotate(-25)")
         ;
 
-        // Add Y axis
-        var y = d3.scaleLinear()
-            .domain([0, Math.max(...values.map(v => v[countCol]))])
-            .range([ height, 0]);
-        svg.append("g")
-            .call(d3.axisLeft(y));
-
         if (!stacked) {
+
+            // Add Y axis
+            var y = d3.scaleLinear()
+                .domain([0, Math.max(...values.map(v => v[countCol]))])
+                .range([ height, 0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
             svg.selectAll('mybar')
                 .data(values)
                 .enter()
@@ -54,22 +55,49 @@ const render_query_barplot = async (db, query, params, view) => {
                 .attr("fill", "#69b3a2");
         }
         else {
-            const [stacks, keys] = stack(
+            let [stacks, keys] = stack(
                 data.values,
                 x => x[xCol],
                 x => x[1],
                 x => x[countCol]);
 
-            console.log(stacks, keys);
+            console.log(JSON.parse(JSON.stringify(stacks)), keys);
             if (keys.map(v => ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"].indexOf(v) >= 0).every(v => v)) {
                 // Severity keys
-                severity = ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"];
+                keys = ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"];
             }
 
              // color palette = one color per subgroup
             var color = d3.scaleOrdinal()
                 .domain(keys)
-                .range(['#00aa00', '#88bb00', '#bb8800', '#f7958a','#e51600'])
+                .range(['#00aa00', '#88bb00', '#bb8800', '#f7958a', '#e51600'])
+
+            // Should all reach top?
+            const percent_stack_plot = true;
+            if (percent_stack_plot) {
+                // Add Y axis
+                var y = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range([ height, 0 ]);
+                svg.append("g")
+                    .call(d3.axisLeft(y));
+
+                stacks.forEach(function(d){
+                    // Compute the total
+                    let tot = 0;
+                    for (const i in keys){ const name=keys[i] ; if (!!d[name]){ tot += +d[name] } }
+                    // Now normalize
+                    for (const i in keys){ const name=keys[i] ; if (!!d[name]){ d[name] = d[name] / tot * 100}}
+                })
+            }
+            else {
+                // Add Y axis
+                var y = d3.scaleLinear()
+                    .domain([0, Math.max(...values.map(v => v[countCol]))])
+                    .range([ height, 0]);
+                svg.append("g")
+                    .call(d3.axisLeft(y));
+            }
 
             //stack the data? --> stack per subgroup
             var stackedData = d3.stack()
@@ -82,15 +110,21 @@ const render_query_barplot = async (db, query, params, view) => {
             // Enter in the stack data = loop key per key = group per group
                 .data(stackedData)
                 .enter().append("g")
-                .attr("fill", function(d) { return color(d[1]); })
+                .attr("fill", function(d) { return color(d.key); })
                 .selectAll("rect")
             // enter a second time = loop subgroup per subgroup to add all rectangles
-                .data(function(d) { console.log("--", d); return d; })
+                .data(function(d) { return d; })
                 .enter().append("rect")
-                .attr("x", function(d) { console.log("x", d); return x(d.data.__x__); })
-                .attr("y", function(d) { console.log("y", d);return y(d[1]); })
-                .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+                .attr("x", function(d) { return x(d.data.__x__); })
+                .attr("y", function(d) { if(isNaN(d[1])) {return y(d[0]);}; return y(d[1]); })
+                .attr("height", function(d) { if(isNaN(d[1])) {return 0;} ; return y(d[0]) - y(d[1]); })
                 .attr("width", x.bandwidth())
+                // .attr("stroke", "grey")
+                .on("mouseover", function(d){
+                    var subgroupName = d3.select(this.parentNode).datum().key;
+                    var subgroupValue = d.data[subgroupName];
+                    console.log("name", subgroupName, "value", subgroupValue);
+                })
         }
     });
 };
