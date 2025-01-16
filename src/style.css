@@ -31,6 +31,9 @@ button:disabled {
     cursor: not-allowed;
 }
 /* Plots */
+#tooltip {
+    position: absolute;
+}
 
 
 /* Query builder */
@@ -40,6 +43,9 @@ button:disabled {
     height: 100vh;
     z-index: 10;
     background: white;
+}
+
+#query_builder svg {
     user-select: none;
 }
 
@@ -138,4 +144,9 @@ button#run_graph_query {
 #fabspace button.offline {
     pointer-events: none;
     cursor: not-allowed;
+}
+
+/* Not done in time */
+#fabspace #run_graph_query {
+    display: none;
 }

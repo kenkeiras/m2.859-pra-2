@@ -71,6 +71,7 @@ const show_query_builder = (builder_space, graph_svg, plot_space, margin_conf) =
 
     const show_graph_btn = document.getElementById('show_graph');
     show_graph_btn.classList.add('offline');
+    show_graph_btn.onclick = display_query_builder;
 
     const svg = builder_space.firstElementChild;
 
@@ -80,6 +81,34 @@ const show_query_builder = (builder_space, graph_svg, plot_space, margin_conf) =
     builder_space.style.height = parseInt(svg.getAttribute('height')) + 'px';
     svg.style.width = parseInt(svg.getAttribute('width')) + 'px';
     svg.style.height = parseInt(svg.getAttribute('height')) + 'px';
+
+    // Configure moving around
+    builder_space.onmousedown = (event) => {
+        let lastPosX = event.clientX;
+        let lastPosY = event.clientY;
+        builder_space.onmousemove = (event) => {
+            console.log("Dragging", event)
+
+            const offX = event.clientX - lastPosX;
+            const offY = event.clientY - lastPosY;
+
+            builder_space.style.left = parseInt(builder_space.style.left) + offX + 'px';
+            builder_space.style.top = parseInt(builder_space.style.top) + offY + 'px';
+
+            lastPosX = event.clientX;
+            lastPosY = event.clientY;
+        }
+    };
+
+    builder_space.onmouseup = (event) => {
+        builder_space.onmousemove = null;
+    }
+
+    builder_space.onmouseleave = (event) => {
+        builder_space.onmousemove = null;
+    }
+
+    //
 
     const queryBuilder = wire_svg(builder_space);
     window.queryBuilder = queryBuilder;  // We expose this globally for easier tests
@@ -130,6 +159,18 @@ const hide_query_builder = () => {
     const show_graph_btn = document.getElementById('show_graph');
     show_graph_btn.classList.remove('offline');
     show_graph_btn.disabled = false;
+};
+
+const display_query_builder = () => {
+    const query_builder = document.getElementById('query_builder');
+    query_builder.classList.remove('hidden');
+
+    const run_query_btn = document.getElementById('run_graph_query');
+    run_query_btn.classList.remove('offline');
+
+    const show_graph_btn = document.getElementById('show_graph');
+    show_graph_btn.classList.add('offline');
+    show_graph_btn.disabled = true;
 };
 
 const close_query_catalog = () => {

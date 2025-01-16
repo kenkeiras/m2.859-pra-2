@@ -129,6 +129,42 @@ const render_query_barplot = async (db, query, params, view, opts) => {
                 .attr("transform", "rotate(-25)")
             ;
 
+            // ----------------
+            // Create a tooltip
+            // ----------------
+            var tooltip = d3.select("#tooltip")
+            .style("opacity", 0)
+            .attr("class", "tooltip")
+            .style("background-color", "white")
+            .style("border", "solid")
+            .style("border-width", "1px")
+            .style("border-radius", "5px")
+            .style("padding", "10px")
+
+            // Three function that change the tooltip when user hover / move / leave a cell
+            var mouseover = function(d) {
+                var subgroupName = d3.select(this.parentNode).datum().key;
+                var subgroupValue = d.data[subgroupName];
+
+                let total = 0;
+                for (const key of keys) {
+                    total += d.data[key] || 0;
+                }
+
+                tooltip
+                    .html("Severidad: " + subgroupName + "<br>" + "Ítems: " + subgroupValue + ' / ' + total)
+                    .style("opacity", 1)
+            }
+            var mousemove = function(d) {
+                tooltip
+                .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                .style("top", (d3.mouse(this)[1]) + "px")
+            }
+            var mouseleave = function(d) {
+                tooltip
+                .style("opacity", 0)
+            }
+
             // Show the bars
             svg.append("g")
                 .selectAll("g")
@@ -150,6 +186,9 @@ const render_query_barplot = async (db, query, params, view, opts) => {
                     var subgroupValue = d.data[subgroupName];
                     console.log("name", subgroupName, "value", subgroupValue);
                 })
+                .on("mouseover", mouseover)
+                .on("mousemove", mousemove)
+                .on("mouseleave", mouseleave)
         }
     });
 };

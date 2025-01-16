@@ -161,20 +161,24 @@
     </div>
 
     <div id="fabspace">
-      <button id="run_catalog_query" disabled="true">
-        <img src="./res/map-solid.svg" width="30" height="30">
+      <button id="run_catalog_query" disabled="true" style="width: 100%" >
+        <img src="./res/map-solid.svg" width="30" height="30" style="display: block; margin: 0 auto;">
+        Catálogo
       </button>
-      <button id="show_graph" disabled="true">
-        <img src="./res/hexagon-nodes-solid.svg" width="30" height="30">
+      <button id="show_graph" disabled="true" style="width: 100%" >
+        <img src="./res/hexagon-nodes-solid.svg" width="30" height="30" style="display: block; margin: 0 auto;">
+        Grafo
       </button>
-      <button id="run_graph_query" disabled="true">
-        <img src="./res/circle-play-regular.svg" width="30" height="30">
+      <button id="run_graph_query" disabled="true" style="width: 100%" >
+        <img src="./res/circle-play-regular.svg" width="30" height="30" style="display: block; margin: 0 auto;">
+        Aplicar
       </button>
     </div>
 
-    <svg id="viz_area"></svg>  <!-- height="100vh" width="100vw" -->
+    <svg id="viz_area"></svg>
+    <div id="tooltip"></div>
 
-    <div id="query_builder" disabled="true"></div>
+    <div id="query_builder"></div>
 
     <script src="./plots/barplot.js"></script>
     <script src="./plots/lineplot.js"></script>
