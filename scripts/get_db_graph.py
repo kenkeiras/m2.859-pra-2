@@ -72,14 +72,55 @@ def rec_fill_fields_for_tables(hierarchy, fpath):
         hierarchy[tab_name]['__fields__'] = get_fields_in_table(tab_name, fpath)
 
     return hierarchy
-        
+
+def hierarchy_to_graphviz(hierarchy):
+    idx = 0
+    def render_node(fields, name):
+        nonlocal idx
+
+        node_name = 'n_' + str(idx)
+        idx += 1
+
+        label = ["<name> {}".format(name.upper())]
+        label.append('')  # Separation between name and fields
+        for field in fields:
+            fname = field['name']
+            ftype = field['type']
+            fispk = field['primary_key']
+
+            label.append('{}{}'.format(
+                '<pk> ' if fispk else '<fk>' if fname == '__parent__' else '',
+                fname,
+            ))
+
+        node_data = [node_name, ' [']
+        node_data.append('label="{}"'.format('|'.join(label)))
+        node_data.append(', shape="record"];')
+        result.append(''.join(node_data))
+        return node_name
+
+    def rec(node, name, parent):
+        node_name = render_node(node['__fields__'], name)
+        if parent is not None:
+            result.append('{}:fk -> {}'.format(node_name, parent))
+        for tab, contents in node.items():
+            if tab != '__fields__':
+                rec(contents, tab, node_name)
+
+    result = ['digraph {', 'rankdir=LR;']
+    for tab, contents in hierarchy.items():
+        rec(contents, tab, None)
+    result.append('}')
+    return '\n'.join(result)
 
 if __name__ == '__main__':
-    if len(sys.argv) == 0:
-        print("{} <input.sqlite>".format(sys.argv[0]))
+    if len(sys.argv) != 3:
+        print("{} <input.sqlite> <out.dot>".format(sys.argv[0]))
         exit(0)
     
     table_names = get_table_names(sys.argv[1])
     hierarchy = get_table_hierarchy(table_names)
     hierarchy = rec_fill_fields_for_tables(hierarchy, sys.argv[1]) 
-    print(json.dumps(hierarchy, indent=4))
+    print(json.dumps(hierarchy, indent=4), file=sys.stderr)
+    with open(sys.argv[2], 'wt') as f:
+        print(hierarchy_to_graphviz(hierarchy), file=f)
