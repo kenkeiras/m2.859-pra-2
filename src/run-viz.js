@@ -78,6 +78,22 @@ const run = async () => {
     for (const btn of document.getElementsByTagName('button')) {
         btn.disabled = true;
     }
+    
+    const testbar = document.getElementById('testbar');
+    const build_graph_btn = testbar.querySelector('button[name="show_graph"]');
+    let QUERY_BUILDER_GRAPH_SVG = null;
+
+    fetch('../data/graph.svg').then(res => {
+        res.text().then(svg => {
+            QUERY_BUILDER_GRAPH_SVG = svg;
+            build_graph_btn.disabled = false;
+            show_query_builder(
+                document.querySelector('#query_builder'), 
+                svg
+            );
+        })
+    })
+
     console.log("loading db...")
     console.time("DB load")
     const db = await load_db();
@@ -85,10 +101,11 @@ const run = async () => {
     console.timeEnd("DB load")
 
     for (const btn of document.getElementsByTagName('button')) {
-        btn.disabled = false;
+        if (btn != build_graph_btn) {
+            btn.disabled = false;
+        }
     }
 
-    const testbar = document.getElementById('testbar');
 
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 80, left: 80},

@@ -88,8 +88,12 @@ def hierarchy_to_graphviz(hierarchy):
             ftype = field['type']
             fispk = field['primary_key']
 
+            if fname == '__parent__':
+                # Internal fields
+                continue
+
             label.append('{}{}'.format(
-                '<pk> ' if fispk else '<fk>' if fname == '__parent__' else '',
+                '<pk> ' if fispk else '',
                 fname,
             ))
 
@@ -102,7 +106,7 @@ def hierarchy_to_graphviz(hierarchy):
     def rec(node, name, parent):
         node_name = render_node(node['__fields__'], name)
         if parent is not None:
-            result.append('{}:fk -> {}'.format(node_name, parent))
+            result.append('{} -> {}'.format(node_name, parent))
         for tab, contents in node.items():
             if tab != '__fields__':
                 rec(contents, tab, node_name)

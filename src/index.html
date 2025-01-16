@@ -6,13 +6,8 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="./sqljs/v1.12.0/sql-wasm.js"></script>
     <style>
-      html, body, svg {
-          margin: 0;
-          padding: 0;
-          width: 100vw;
-          height: 100vh;
-      }
     </style>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <nav id="testbar">
@@ -115,13 +110,17 @@ JOIN cve__containers__cna__metrics AS METRICS
       <button name="percent_barplot">Percent Barplot</button>
       <button name="lineplot">Lineplot</button>
       <button name="areaplot">Areaplot</button>
+      <button name="show_graph">Build query</button>
     </nav>
 
     <svg id="viz_area"></svg>  <!-- height="100vh" width="100vw" -->
 
+    <div id="query_builder" disabled="true"></div>
+
     <script src="./plots/barplot.js"></script>
     <script src="./plots/lineplot.js"></script>
     <script src="./plots/areaplot.js"></script>
+    <script src="./query_builder.js"></script>
     <script src="./run-viz.js"></script>
   </body>
 </html>

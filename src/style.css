@@ -1,0 +1,36 @@
+/* General */
+html, body, svg {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Plots */
+
+
+/* Query builder */
+#query_builder {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    background: white;
+    user-select: none;
+}
+
+#query_builder[disabled="true"] {
+    display: none;
+}
+
+#query_builder .nodefield {
+    cursor: pointer;
+}
+
+#query_builder .nodefield.selected {
+    font-weight: bold;
+}
+
+#query_builder .nodetitle {
+    font-weight: bold;
+}
