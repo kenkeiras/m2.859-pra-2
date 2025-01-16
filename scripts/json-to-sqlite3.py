@@ -95,8 +95,8 @@ def get_schema_from_file(fpath, file_lines):
         data_schema = get_data_schema(data)
         schema = merge_schemas(schema, data_schema)
         count += 1
-        if count >= 1000*5:
-            break
+        # if count >= 1000*5:
+        #     break
 
     return schema
 
@@ -256,9 +256,15 @@ def ingest_row_in_db(data, cursor, main_table_name, barriers):
     def recur(node, path, parent_row_id, table_name):
         nonlocal ingestion_fields
         nonlocal ingestion_values
+        field_name = get_field_from_path(path)
         if isinstance(node, str) or isinstance(node, int) or isinstance(node, float):
-            ingestion_fields.append(get_field_from_path(path))
+            ingestion_fields.append(field_name)
             ingestion_values.append(node)
+
+        elif field_name in barriers:
+            # Mixed type, represent as JSONB
+            ingestion_fields.append(field_name)
+            ingestion_values.append(json.dumps(node))
 
         elif isinstance(node, list):
             for it in node:
@@ -266,15 +272,10 @@ def ingest_row_in_db(data, cursor, main_table_name, barriers):
                 base_table_name = table_name
                 if base_table_name != main_table_name:
                     base_table_name += COL_PATH_JOINER + '0'
-                inner_table_name = base_table_name + COL_PATH_JOINER + get_field_from_path(path)
+                inner_table_name = base_table_name + COL_PATH_JOINER + field_name
 
-                try:
-                    cursor.execute(f'INSERT INTO {inner_table_name} (__parent__) VALUES (?);',
-                                   (parent_row_id,))
-                except sqlite3.OperationalError as ex:
-                    if 'legacy' in inner_table_name:
-                        print("Ex", ex)
-                    raise
+                cursor.execute(f'INSERT INTO {inner_table_name} (__parent__) VALUES (?);',
+                               (parent_row_id,))
                 inner_row_id = cursor.lastrowid
 
                 outer_ingestion_fields = ingestion_fields
@@ -287,8 +288,10 @@ def ingest_row_in_db(data, cursor, main_table_name, barriers):
                     for k, v in it.items():
                         recur(v, (k,), inner_row_id, inner_table_name)
                 else:
-                    assert isinstance(it, str) or isinstance(it, float), "Unexpected type: {}".format(type(it))
+                    assert isinstance(it, str) or isinstance(it, float) or isinstance(it, list), "Unexpected type: {}".format(type(it))
                     ingestion_fields = ['__value__']
+                    if isinstance(it, list):
+                        it = json.dumps(it)
                     ingestion_values = [it]
 
                 sets = zip(ingestion_fields, ingestion_values)
@@ -367,8 +370,8 @@ def ingest_in_db(fpath, db, main_table_name, file_lines, pk, barriers):
             ingest_row_in_db(data, cursor, main_table_name, barriers)
         known_pks.add(data_id)
         count += 1
-        if count >= 1000*5:
-            break
+        # if count >= 1000*5:
+        #     break
     cursor.close()
     db.commit()
 
