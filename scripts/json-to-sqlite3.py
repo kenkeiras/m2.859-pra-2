@@ -5,15 +5,28 @@ import sys
 import tqdm
 import sqlite3
 import os
+import zipfile
 
 COL_PATH_JOINER = '__'
+MIXED_TYPE = 'MIXED_TYPE'
 
 def merge_schemas(s1, s2):
-    if s1 in (int, str, float):
+    if s1 is None:
+        return s2
+    if s2 is None:
+        return s1
+
+    if s1 != s2 and (s1 == str or s2 == str):
+        return MIXED_TYPE
+
+    if s1 in (int, str, float) and s2 in (int, str, float):
         assert s1 == s2, "Expected similar types, found: {} | {}".format(s1, s2)
         return s1
 
-    assert type(s1) == type(s2)
+    if type(s1) != type(s2):
+        return MIXED_TYPE
+
+    assert type(s1) == type(s2), "Expected similar types, found: {} | {}".format(s1, s2)
     if isinstance(s1, list):
         if len(s1) == 0:
             return s2
@@ -64,34 +77,37 @@ def get_data_schema(data):
         for k, v in data.items():
             schema[k] = get_data_schema(v)
         return schema
+    elif data is None:
+        return None
     else:
         raise ValueError('Unknown type: {}'.format(type(data)))
 
 def get_schema_from_file(fpath, file_lines):
     schema = {}
     count = 0
-    with open(fpath) as f:
-        for line in tqdm.tqdm(
-                f,
-                total=file_lines,
-                unit='l',
-                desc='[1/2] Reading file & generating schema'
-        ):
-            data = json.loads(line)
-            data_schema = get_data_schema(data)
-            schema = merge_schemas(schema, data_schema)
-            count += 1
-            # if count >= 1000*10:
-            #     break
+    for line in tqdm.tqdm(
+            get_items_in_file(fpath),
+            total=file_lines,
+            unit='l',
+            desc='[1/2] Reading file & generating schema'
+    ):
+        data = json.loads(line)
+        data_schema = get_data_schema(data)
+        schema = merge_schemas(schema, data_schema)
+        count += 1
+        if count >= 1000*5:
+            break
 
     return schema
 
 def flatten_schema(schema):
     def recur(node, path):
-        if node in (str, float):
+        if node in (str, float, MIXED_TYPE):
             _type = 'TEXT'
             if node == float:
                 _type = 'NUMBER'
+            elif node == MIXED_TYPE:
+                _type = 'JSONB'
             yield (path, _type)
         elif isinstance(node, list):
             for idx, it in enumerate(node):
@@ -146,6 +162,7 @@ def generate_create_table_from_schema(schema, main_table_name, pk_col) -> list[s
             if idx + 1 == len(graph_path):
                 tables[table].append((COL_PATH_JOINER.join(graph_path[-1][1]), col_type, ''))
 
+    barriers = []
     for tab_name, fields in tables.items():
         tab_ddl = [f'CREATE TABLE {tab_name} (']
 
@@ -156,14 +173,17 @@ def generate_create_table_from_schema(schema, main_table_name, pk_col) -> list[s
             else:
                 first = False
 
-            if tab_name == main_table_name and field == pk_col:
+            if tab_name == main_table_name and field == pk_col.replace('.', COL_PATH_JOINER):
                 notes += ' PRIMARY KEY'
 
-            tab_ddl.append(f'{field or "__value__"} {_type}{notes}')
+            if _type == 'JSONB' and field:
+                barriers.append(sanitize_field(field))
+            tab_ddl.append(f'{sanitize_field(field) or "__value__"} {_type}{notes}')
 
         if tab_name != main_table_name:
             assert table in parent_graph
-            tab_ddl[-1] += ','
+            if not first:
+                tab_ddl[-1] += ','
             tab_ddl.append('__parent__ INT,')
             tab_ddl.append('FOREIGN KEY(__parent__) REFERENCES {}(rowid)'.format(
                 parent_graph[table],
@@ -171,25 +191,67 @@ def generate_create_table_from_schema(schema, main_table_name, pk_col) -> list[s
 
         tab_ddl.append(');')
         ddl.append('\n'.join(tab_ddl))
-    return ddl
+
+    return ddl, barriers
 
 def build_db_with_schema(db_path, ddl):
     db = sqlite3.connect(db_path)
     for stmt in ddl:
-        db.execute(stmt)
+        try:
+            db.execute(stmt)
+        except sqlite3.OperationalError:
+            print("STMT:", stmt)
+            raise
         db.commit()
     return db
 
+def count_items(fpath):
+    if fpath.endswith('.jsonl'):
+        return count_lines(fpath)
+    elif fpath.endswith('.zip'):
+        return count_files_in_zip(fpath, '.json')
+    else:
+        raise NotImplementedError('Unsupported file type: {}'.format(fpath))
+
+def get_items_in_jsonl(fpath):
+    with open(fpath) as f:
+        yield from f
+
+def get_items_in_zip(fpath, suffix):
+    with zipfile.ZipFile(fpath) as zf:
+        for name in zf.namelist():
+            if name.endswith(suffix):
+                yield zf.read(name).decode()
+
+def get_items_in_file(fpath):
+    if fpath.endswith('.jsonl'):
+        yield from get_items_in_jsonl(fpath)
+    elif fpath.endswith('.zip'):
+        yield from get_items_in_zip(fpath, '.json')
+    else:
+        raise NotImplementedError('Unsupported file type: {}'.format(fpath))
+
 def count_lines(fpath):
     count = 0
-    with open(sys.argv[1]) as f:
+    with open(fpath) as f:
         for _ in f:
             count += 1
     return count
 
-def ingest_row_in_db(data, cursor, main_table_name):
+def count_files_in_zip(fpath, suffix):
+    count = 0
+    with zipfile.ZipFile(fpath) as zf:
+        for name in zf.namelist():
+            if name.endswith(suffix):
+                count += 1
+    return count
+
+def sanitize_field(field_name):
+    return field_name.replace(' ', '_').replace('-', '_dash_').replace(':', '_colon_')
+
+def ingest_row_in_db(data, cursor, main_table_name, barriers):
     def get_field_from_path(path):
-        return COL_PATH_JOINER.join(path)
+        return sanitize_field(COL_PATH_JOINER.join(path))
 
     def recur(node, path, parent_row_id, table_name):
         nonlocal ingestion_fields
@@ -206,8 +268,13 @@ def ingest_row_in_db(data, cursor, main_table_name):
                     base_table_name += COL_PATH_JOINER + '0'
                 inner_table_name = base_table_name + COL_PATH_JOINER + get_field_from_path(path)
 
-                cursor.execute(f'INSERT INTO {inner_table_name} (__parent__) VALUES (?);',
-                               (parent_row_id,))
+                try:
+                    cursor.execute(f'INSERT INTO {inner_table_name} (__parent__) VALUES (?);',
+                                   (parent_row_id,))
+                except sqlite3.OperationalError as ex:
+                    if 'legacy' in inner_table_name:
+                        print("Ex", ex)
+                    raise
                 inner_row_id = cursor.lastrowid
 
                 outer_ingestion_fields = ingestion_fields
@@ -235,6 +302,7 @@ def ingest_row_in_db(data, cursor, main_table_name):
                     # print("N", node)
                     pass
                 else:
+                    # print("-->", query, ingestion_values + [inner_row_id])
                     cursor.execute(query, ingestion_values + [inner_row_id])
 
                 ingestion_fields = outer_ingestion_fields
@@ -249,7 +317,7 @@ def ingest_row_in_db(data, cursor, main_table_name):
     # First round with atomic values
     for k, v in data.items():
         if isinstance(v, str) or isinstance(v, int) or isinstance(v, float):
-            ingestion_fields.append(k)
+            ingestion_fields.append(sanitize_field(k))
             ingestion_values.append(v)
 
     # Manually interpolating data into SQL statements is dangerous!
@@ -262,40 +330,62 @@ def ingest_row_in_db(data, cursor, main_table_name):
     for k, v in data.items():
         recur(v, (k,), main_row_id, main_table_name)
 
-def ingest_in_db(fpath, db, main_table_name, file_lines, pk):
+    sets = zip(ingestion_fields, ingestion_values)
+    sets_str = [
+        f"{field}=?"
+        for field in ingestion_fields
+    ]
+
+    query = f'UPDATE {main_table_name} SET {", ".join(sets_str)} WHERE rowid=?;'
+    if not ingestion_values:
+        # TODO: There's an issue here :\
+            # print("N", node)
+        pass
+    else:
+        # print("-->", query, ingestion_values + [inner_row_id])
+        cursor.execute(query, ingestion_values + [main_row_id])
+
+def get_item_on_path(data, path_chunks):
+    for chunk in path_chunks:
+        assert isinstance(data, dict)
+        data = data[chunk]
+    return data
+
+def ingest_in_db(fpath, db, main_table_name, file_lines, pk, barriers):
     count = 0
     cursor = db.cursor()
     known_pks = set()
-    with open(fpath) as f:
-        for line in tqdm.tqdm(
-                f,
-                total=file_lines,
-                unit='l',
-                desc='[2/2] Ingesting data'
-        ):
-            data = json.loads(line)
-            data_id = data[pk]
-            if data_id not in known_pks:
-                ingest_row_in_db(data, cursor, main_table_name)
-            known_pks.add(data_id)
-            count += 1
-            # if count >= 1000*10:
-            #     break
+    for line in tqdm.tqdm(
+            get_items_in_file(fpath),
+            total=file_lines,
+            unit='l',
+            desc='[2/2] Ingesting data'
+    ):
+        data = json.loads(line)
+        data_id = get_item_on_path(data, pk.split('.'))
+        if data_id not in known_pks:
+            ingest_row_in_db(data, cursor, main_table_name, barriers)
+        known_pks.add(data_id)
+        count += 1
+        if count >= 1000*5:
+            break
     cursor.close()
     db.commit()
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:
-        print("{} <input.jsonl> <output.sqlite> <table name> <public key column>".format(sys.argv[0]))
+        print("{} <input.jsonl|input.zip> <output.sqlite> <table name> <public key column>".format(sys.argv[0]))
         exit(0)
 
     if os.path.exists(sys.argv[2]):
         print("Output file {} already exists. Cowardly stopping".format(sys.argv[2]))
         exit(0)
 
-    file_lines = count_lines(sys.argv[1])
+    file_lines = count_items(sys.argv[1])
+    print("Found {} items".format(file_lines))
     schema = get_schema_from_file(sys.argv[1], file_lines)
-    ddl = generate_create_table_from_schema(schema, sys.argv[3], sys.argv[4])
+    ddl, barriers = generate_create_table_from_schema(schema, sys.argv[3], sys.argv[4])
+    print(barriers)
     db = build_db_with_schema(sys.argv[2], ddl)
-    ingest_in_db(sys.argv[1], db, sys.argv[3], file_lines, sys.argv[4])
+    ingest_in_db(sys.argv[1], db, sys.argv[3], file_lines, sys.argv[4], barriers)
     db.close()
