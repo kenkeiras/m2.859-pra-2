@@ -36,7 +36,7 @@
     IFNULL(METRICS.cvssV4_0__baseSeverity,
     IFNULL(METRICS.cvssV3_0__baseSeverity,
     NULL
-    ))),
+    ))) as Severity,
     COUNT(*)
 FROM cwe AS CWE
 JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
@@ -47,9 +47,32 @@ JOIN cve AS CVE
     ON PROBS.__parent__ = cve.rowid
 JOIN cve__containers__cna__metrics AS METRICS
     ON CVE.rowid = METRICS.__parent__
-    GROUP BY [CWE-ID]
+    WHERE Severity IS NOT NULL
+    GROUP BY [CWE-ID], Severity
     ;`.replaceAll('\n', '  ');">
         qCweBySev
+      </button>
+      <button onclick="cmdbar.value = `SELECT
+    [Functional Areas],
+    IFNULL(METRICS.cvssV3_1__baseSeverity,
+    IFNULL(METRICS.cvssV4_0__baseSeverity,
+    IFNULL(METRICS.cvssV3_0__baseSeverity,
+    NULL
+    ))) as Severity,
+    COUNT(*)
+FROM cwe AS CWE
+JOIN cve__containers__cna__problemTypes__0__descriptions as DESCR
+    ON 'CWE-' || CWE.[CWE-ID] = DESCR.cweId
+JOIN cve__containers__cna__problemTypes AS PROBS
+    ON DESCR.__parent__ = PROBS.rowid
+JOIN cve AS CVE
+    ON PROBS.__parent__ = cve.rowid
+JOIN cve__containers__cna__metrics AS METRICS
+    ON CVE.rowid = METRICS.__parent__
+    WHERE Severity IS NOT NULL
+    GROUP BY [Functional Areas], Severity
+    ;`.replaceAll('\n', '  ');">
+        qAreaBySev
       </button>
       <button name="barplot">Barplot</button>
       <button name="lineplot">Lineplot</button>
