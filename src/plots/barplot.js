@@ -110,13 +110,16 @@ const render_query_barplot = async (db, query, params, view, opts) => {
             else {
                 // Add Y axis
                 var y = d3.scaleLinear()
-                    .domain([0, Math.max(...values.map(v => v[countCol]))])
+                    .domain([0, Math.max(...stacks.map(v => {
+                        let sum = 0
+                        for (k of keys) { sum += (v[k] || 0) }
+                        return sum
+                      }))])
                     .range([ height, 0]);
                 svg.append("g")
                     .call(d3.axisLeft(y));
             }
 
-            //stack the data? --> stack per subgroup
             var stackedData = d3.stack()
                 .keys(keys)
             (stacks);
